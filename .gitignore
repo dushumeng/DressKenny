@@ -5,3 +5,7 @@
 /build
 /gradle
 /app/.DS_Store
+/demo/gen
+/demo/.idea
+/demo/.settings
+/demo/out
