@@ -11,6 +11,7 @@ import android.util.Log;
 import com.baidu.speech.VoiceRecognitionService;
 import com.fcdream.dress.kenny.speech.BaseSpeech;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -54,7 +55,9 @@ public class BaiduSpeech extends BaseSpeech implements RecognitionListener {
 
     @Override
     public void stop() {
-
+        if (speechRecognizer != null) {
+            speechRecognizer.cancel();
+        }
     }
 
     private Intent createParamIntent() {
@@ -75,27 +78,27 @@ public class BaiduSpeech extends BaseSpeech implements RecognitionListener {
 
     @Override
     public void onReadyForSpeech(Bundle bundle) {
-        Log.d("dsminfo", "准备就绪");
+        Log.i("dsminfo", "准备就绪");
     }
 
     @Override
     public void onBeginningOfSpeech() {
-        Log.d("dsminfo", "开始说话处理");
+        Log.i("dsminfo", "开始说话处理");
     }
 
     @Override
     public void onRmsChanged(float v) {
-        Log.d("dsminfo", "音量变化处理");
+        Log.i("dsminfo", "音量变化处理");
     }
 
     @Override
     public void onBufferReceived(byte[] bytes) {
-        Log.d("dsminfo", "录音数据传出处理");
+        Log.i("dsminfo", "录音数据传出处理");
     }
 
     @Override
     public void onEndOfSpeech() {
-        Log.d("dsminfo", "说话结束处理");
+        Log.i("dsminfo", "说话结束处理");
     }
 
     @Override
@@ -131,15 +134,21 @@ public class BaiduSpeech extends BaseSpeech implements RecognitionListener {
                 break;
         }
         sb.append(":" + error);
-        Log.d("dsminfo", sb.toString());
+        Log.i("dsminfo", sb.toString());
     }
 
     @Override
     public void onResults(Bundle results) {
         ArrayList<String> nbest = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-        Log.d("dsminfo", "识别成功：" + Arrays.toString(nbest.toArray(new String[nbest.size()])));
+        Log.i("dsminfo", "识别成功：" + Arrays.toString(nbest.toArray(new String[nbest.size()])));
         String json_res = results.getString("origin_result");
-        Log.d("dsminfo", json_res);
+        Log.i("dsminfo", json_res);
+
+        if (speechListener != null) {
+            speechListener.onListenEnd(parseResult(results));
+        }
+
+        stop();
     }
 
     @Override
@@ -149,6 +158,11 @@ public class BaiduSpeech extends BaseSpeech implements RecognitionListener {
 
     @Override
     public void onEvent(int i, Bundle bundle) {
-        Log.d("dsminfo", "事件回掉处理");
+        Log.i("dsminfo", "事件回掉处理");
+    }
+
+    private String parseResult(Bundle results) {
+        ArrayList<String> nbest = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+        return Arrays.toString(nbest.toArray(new String[nbest.size()]));
     }
 }

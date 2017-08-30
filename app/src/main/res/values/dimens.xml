@@ -1,0 +1,7 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="robot_width">150dp</dimen>
+    <dimen name="robot_height">231dp</dimen>
+
+</resources>

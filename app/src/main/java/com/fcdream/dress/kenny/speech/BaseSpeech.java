@@ -29,6 +29,8 @@ public abstract class BaseSpeech {
 
         void onListening();
 
+        void onListenError(String errorInfo);
+
         void onListenEnd(String info);
     }
 }
