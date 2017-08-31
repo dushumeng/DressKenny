@@ -8,6 +8,10 @@ import android.content.Context;
 
 public abstract class BaseSpeech {
 
+    public static final String STATUS_START = "status_start";
+    public static final String STATUS_LISTENING = "status_listening";
+    public static final String STATUS_END = "status_end";
+
     protected SpeechListener speechListener;
 
     public BaseSpeech(SpeechListener speechListener) {

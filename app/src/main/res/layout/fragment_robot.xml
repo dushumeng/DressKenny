@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
+
+    <RelativeLayout
+        android:layout_width="@dimen/robot_width"
+        android:layout_height="@dimen/robot_height"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/robot_margin_bottom">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/robot_body" />
+
+        <ImageView
+            android:id="@+id/robot_mic"
+            android:layout_width="@dimen/robot_mic_width"
+            android:layout_height="@dimen/robot_mic_height" />
+
+        <ImageView
+            android:id="@+id/robot_mouth"
+            android:layout_width="@dimen/robot_mouth_width"
+            android:layout_height="@dimen/robot_mouth_height"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/robot_mouth_margin_bottom"
+            android:scaleType="fitCenter"
+            android:src="@drawable/anim_mouth" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/robot_tip"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/robot_tip_height"
+        android:layout_marginLeft="@dimen/robot_tip_margin_left_right"
+        android:layout_marginRight="@dimen/robot_tip_margin_left_right"
+        android:layout_marginTop="@dimen/robot_tip_margin_top"
+        android:background="@drawable/drawable_main_line_bg"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:paddingLeft="@dimen/robot_tip_padding_left_right"
+        android:paddingRight="@dimen/robot_tip_padding_left_right"
+        android:singleLine="true"
+        android:text="@string/robot_tip"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/robot_tip_text_size" />
+</RelativeLayout>

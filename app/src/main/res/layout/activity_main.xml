@@ -4,33 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    tools:context="com.fcdream.dress.kenny.MainActivity">
+    tools:context="com.fcdream.dress.kenny.activity.MainActivity">
 
-
-    <ImageView
-        android:layout_width="@dimen/robot_width"
-        android:layout_height="@dimen/robot_height"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:src="@drawable/robot_body" />
-
-    <TextView
-        android:id="@+id/tip"
+    <fragment
+        android:id="@+id/layout_robot"
+        android:name="com.fcdream.dress.kenny.activity.RobotFragment"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:padding="15dp"
-        android:background="@drawable/drawable_main_line_bg"
-        android:ellipsize="marquee"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:gravity="center"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:singleLine="true"
-        android:text="@string/robot_tip"
-        android:textColor="@android:color/white"
-        android:textSize="30sp" />
+        android:layout_height="match_parent" />
+
+
+    <fragment
+        android:id="@+id/layout_main_list"
+        android:name="com.fcdream.dress.kenny.activity.MainListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

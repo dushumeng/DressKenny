@@ -1,18 +1,16 @@
 package com.fcdream.dress.kenny;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 
 import com.fcdream.dress.kenny.ioc.AnnotateUtil;
 
 /**
- * Created by shmdu on 2017/8/30.
+ * Created by shmdu on 2017/8/31.
  */
 
-public abstract class BaseActivity extends Activity {
-
-    protected final String TAG = this.getClass().getName();
+public abstract class BaseFragmentActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

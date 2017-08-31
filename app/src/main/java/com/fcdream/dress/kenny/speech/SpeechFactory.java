@@ -6,11 +6,10 @@ package com.fcdream.dress.kenny.speech;
 
 public class SpeechFactory {
 
-    public enum Type {
-        BAIDU, IFLY;
-    }
+    public static final String TYPE_BAIDU = "type_baidu";
+    public static final String TYPE_IFLY = "type_ifly";
 
-    public static BaseSpeech createSpeech(Type type) {
+    public static BaseSpeech createSpeech(String type) {
         return null;
     }
 }

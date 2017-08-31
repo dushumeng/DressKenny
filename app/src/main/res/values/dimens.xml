@@ -1,7 +1,17 @@
 <resources>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="robot_width">150dp</dimen>
-    <dimen name="robot_height">231dp</dimen>
-
+    <dimen name="robot_width">159dp</dimen>
+    <dimen name="robot_height">246dp</dimen>
+    <dimen name="robot_margin_bottom">29dp</dimen>
+    <dimen name="robot_tip_margin_left_right">44dp</dimen>
+    <dimen name="robot_tip_padding_left_right">15dp</dimen>
+    <dimen name="robot_tip_margin_top">19dp</dimen>
+    <dimen name="robot_tip_height">39dp</dimen>
+    <dimen name="robot_tip_text_size">20sp</dimen>
+    <dimen name="robot_mouth_width">239dp</dimen>
+    <dimen name="robot_mouth_height">31dp</dimen>
+    <dimen name="robot_mouth_margin_bottom">125dp</dimen>
+    <dimen name="robot_mic_width">65dp</dimen>
+    <dimen name="robot_mic_height">65dp</dimen>
 </resources>
