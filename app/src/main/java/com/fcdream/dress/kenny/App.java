@@ -9,19 +9,19 @@ import android.os.Handler;
 
 public class App extends Application {
 
-    private static App instance;
+    private static App appInstance;
 
     private static Handler _appMainHandler;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
+        appInstance = this;
         _appMainHandler = new Handler(getMainLooper());
     }
 
-    public static App getInstance() {
-        return instance;
+    public static App getAppInstance() {
+        return appInstance;
     }
 
     public static void postToMainLooper(Runnable runnable) {

@@ -1,0 +1,1 @@
+java.lang.NoSuchMethodError: No static method onStartNestedScroll(Landroid/view/ViewParent;Landroid/view/View;Landroid/view/View;I)Z in class Landroid/support/v4/view/ViewParentCompat; or its super classes (declaration of 'android.support.v4.view.ViewParentCompat' appears in /data/app/com.fcdream.dress.kenny-2/base.apk)

@@ -14,4 +14,38 @@
     <dimen name="robot_mouth_margin_bottom">125dp</dimen>
     <dimen name="robot_mic_width">65dp</dimen>
     <dimen name="robot_mic_height">65dp</dimen>
+
+    <dimen name="list_page_back_width">37dp</dimen>
+    <dimen name="list_page_back_height">37dp</dimen>
+    <dimen name="list_page_back_margin_top">17dp</dimen>
+    <dimen name="list_page_back_margin_left">23dp</dimen>
+
+    <dimen name="list_page_search_layout_width">220dp</dimen>
+    <dimen name="list_page_search_layout_height">26dp</dimen>
+    <dimen name="list_page_search_layout_margin_top">22dp</dimen>
+    <dimen name="list_page_search_layout_margin_left">120dp</dimen>
+    <dimen name="list_page_search_icon_width">16dp</dimen>
+    <dimen name="list_page_search_icon_height">16dp</dimen>
+    <dimen name="list_page_search_icon_margin_right">8dp</dimen>
+    <dimen name="list_page_search_editbox_margin">20dp</dimen>
+    <dimen name="list_page_speech_layout_width">155dp</dimen>
+    <dimen name="list_page_speech_layout_height">44dp</dimen>
+    <dimen name="list_page_speech_item_width">37dp</dimen>
+    <dimen name="list_page_speech_item_height">37dp</dimen>
+    <dimen name="list_page_speech_item_margin_top">11dp</dimen>
+    <dimen name="list_page_speech_item_margin_left">20dp</dimen>
+    <dimen name="list_page_content_layout_width">620dp</dimen>
+    <dimen name="list_page_content_layout_height">260dp</dimen>
+    <dimen name="list_page_content_layout_x">25dp</dimen>
+    <dimen name="list_page_content_layout_y">75dp</dimen>
+    <dimen name="list_page_content_line_width">9dp</dimen>
+    <dimen name="list_page_content_line_x">125dp</dimen>
+    <dimen name="list_page_content_dress_content_width">211dp</dimen>
+    <dimen name="list_page_content_dress_content_item_width">191dp</dimen>
+    <dimen name="list_page_content_dress_content_item_height">266dp</dimen>
+    <dimen name="list_page_content_dress_content_item_margin">10dp</dimen>
+    <dimen name="list_page_content_dress_item_width">177dp</dimen>
+    <dimen name="list_page_content_dress_item_height">252dp</dimen>
+    <dimen name="list_page_content_shop_item_width">112dp</dimen>
+    <dimen name="list_page_content_shop_item_height">122dp</dimen>
 </resources>

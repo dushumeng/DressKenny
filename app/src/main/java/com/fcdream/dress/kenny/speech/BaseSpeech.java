@@ -14,7 +14,10 @@ public abstract class BaseSpeech {
 
     protected SpeechListener speechListener;
 
-    public BaseSpeech(SpeechListener speechListener) {
+    public BaseSpeech() {
+    }
+
+    public void setSpeechListener(SpeechListener speechListener) {
         this.speechListener = speechListener;
     }
 

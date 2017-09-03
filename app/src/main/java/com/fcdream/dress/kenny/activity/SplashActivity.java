@@ -34,18 +34,15 @@ public class SplashActivity extends BaseActivity {
 
 
     private void waitCompleted() {
-        Executors.newSingleThreadExecutor().submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    latch.await();
-                } catch (InterruptedException e) {
-                    Log.w(TAG, "Wait splash video play completed failed!", e);
-                }
-                App.postToMainLooper(() -> {
-                    startMainPage();
-                });
+        Executors.newSingleThreadExecutor().submit(() -> {
+            try {
+                latch.await();
+            } catch (InterruptedException e) {
+                Log.w(TAG, "Wait splash video play completed failed!", e);
             }
+            App.postToMainLooper(() -> {
+                startMainPage();
+            });
         });
     }
 

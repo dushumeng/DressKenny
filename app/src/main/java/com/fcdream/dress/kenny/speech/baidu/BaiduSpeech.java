@@ -9,6 +9,7 @@ import android.speech.SpeechRecognizer;
 import android.util.Log;
 
 import com.baidu.speech.VoiceRecognitionService;
+import com.fcdream.dress.kenny.R;
 import com.fcdream.dress.kenny.speech.BaseSpeech;
 
 import org.json.JSONException;
@@ -26,8 +27,7 @@ public class BaiduSpeech extends BaseSpeech implements RecognitionListener {
     private SpeechRecognizer speechRecognizer;
 
 
-    public BaiduSpeech(SpeechListener speechListener) {
-        super(speechListener);
+    public BaiduSpeech() {
     }
 
     @Override
@@ -62,6 +62,12 @@ public class BaiduSpeech extends BaseSpeech implements RecognitionListener {
 
     private Intent createParamIntent() {
         Intent intent = new Intent();
+        //初始化语音文件
+        intent.putExtra(Constant.EXTRA_SOUND_START, R.raw.bdspeech_recognition_start);
+        intent.putExtra(Constant.EXTRA_SOUND_END, R.raw.bdspeech_speech_end);
+        intent.putExtra(Constant.EXTRA_SOUND_SUCCESS, R.raw.bdspeech_recognition_success);
+        intent.putExtra(Constant.EXTRA_SOUND_ERROR, R.raw.bdspeech_recognition_error);
+        intent.putExtra(Constant.EXTRA_SOUND_CANCEL, R.raw.bdspeech_recognition_cancel);
         //保存识别过程产生的录音文件
         intent.putExtra(Constant.EXTRA_OUTFILE, "sdcard/outfile.pcm");
         intent.putExtra(Constant.EXTRA_GRAMMAR, "assets:///baidu_speech_grammar.bsg");

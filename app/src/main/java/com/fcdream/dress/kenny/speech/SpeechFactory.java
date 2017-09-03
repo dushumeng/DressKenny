@@ -1,5 +1,9 @@
 package com.fcdream.dress.kenny.speech;
 
+import android.text.TextUtils;
+
+import com.fcdream.dress.kenny.speech.baidu.BaiduSpeech;
+
 /**
  * Created by shmdu on 2017/8/28.
  */
@@ -10,6 +14,9 @@ public class SpeechFactory {
     public static final String TYPE_IFLY = "type_ifly";
 
     public static BaseSpeech createSpeech(String type) {
+        if (TextUtils.equals(TYPE_BAIDU, type)) {
+            return new BaiduSpeech();
+        }
         return null;
     }
 }

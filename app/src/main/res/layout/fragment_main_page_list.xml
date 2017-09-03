@@ -4,4 +4,86 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg">
 
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="@dimen/list_page_back_width"
+        android:layout_height="@dimen/list_page_back_height"
+        android:layout_marginLeft="@dimen/list_page_back_margin_left"
+        android:layout_marginTop="@dimen/list_page_back_margin_top"
+        android:src="@drawable/list_back" />
+
+    <RelativeLayout
+        android:id="@+id/search_layout"
+        android:layout_width="@dimen/list_page_search_layout_width"
+        android:layout_height="@dimen/list_page_search_layout_height"
+        android:layout_marginLeft="@dimen/list_page_search_layout_margin_left"
+        android:layout_marginTop="@dimen/list_page_search_layout_margin_top"
+        android:layout_toRightOf="@+id/back"
+        android:background="@drawable/list_page_search_layout_bg">
+
+        <ImageView
+            android:layout_width="@dimen/list_page_search_icon_width"
+            android:layout_height="@dimen/list_page_search_icon_height"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/list_page_search_icon_margin_right"
+            android:src="@drawable/icon_search" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/list_page_search_editbox_margin"
+            android:layout_marginRight="@dimen/list_page_search_editbox_margin"
+            android:background="#00000000"
+            android:gravity="center_vertical"
+            android:hint="红色大衣"
+            android:singleLine="true"
+            android:textColor="#000000"
+            android:textColorHint="#757575"
+            android:textSize="9sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/list_page_speech_layout_width"
+        android:layout_height="@dimen/list_page_speech_layout_height"
+        android:layout_marginLeft="@dimen/list_page_speech_item_margin_left"
+        android:layout_marginTop="@dimen/list_page_speech_item_margin_top"
+        android:layout_toRightOf="@+id/search_layout"
+        android:background="@drawable/list_page_speech_layout_bg"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/list_page_speech_item_width"
+            android:layout_height="@dimen/list_page_speech_item_height" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/list_page_content_layout_width"
+        android:layout_height="@dimen/list_page_content_layout_height"
+        android:layout_marginLeft="@dimen/list_page_content_layout_x"
+        android:layout_marginTop="@dimen/list_page_content_layout_y">
+
+        <ImageView
+            android:id="@+id/content_line"
+            android:layout_width="@dimen/list_page_content_line_width"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/list_page_content_line_x"
+            android:src="@drawable/list_page_content_line" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/dress_content_list_view"
+            android:layout_width="800dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/content_line"
+            android:scrollbars="none" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/shop_content_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/content_line" />
+    </RelativeLayout>
+
 </RelativeLayout>
