@@ -40,13 +40,13 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:design:23.4.0'
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.alibaba:fastjson:1.1.62.android'
     compile 'com.squareup.picasso:picasso:2.5.2'
     testCompile 'junit:junit:4.12'
     compile files('libs/VoiceRecognition-2.1.20.jar')
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
 }
