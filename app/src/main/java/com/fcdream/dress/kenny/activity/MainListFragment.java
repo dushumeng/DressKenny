@@ -2,6 +2,7 @@ package com.fcdream.dress.kenny.activity;
 
 import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.fcdream.dress.kenny.R;
@@ -54,7 +55,11 @@ public class MainListFragment extends BaseMainPageFragment {
     }
 
     public void startSearch(String currentSearchKey) {
-        this.currentSearchKey = currentSearchKey;
+        if (TextUtils.equals(currentSearchKey, this.currentSearchKey)) {
+
+        } else {
+            this.currentSearchKey = currentSearchKey;
+        }
         TestBus.testSearchDress(new MyCallback<List<DressItem>>() {
 
             @Override

@@ -11,7 +11,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -42,7 +41,6 @@ public class TestBus {
         Call call = okHttpClient.newCall(request);
         //请求加入调度
         call.enqueue(new Callback() {
-
             @Override
             public void onFailure(Call call, IOException e) {
 
@@ -67,8 +65,6 @@ public class TestBus {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
         });
     }

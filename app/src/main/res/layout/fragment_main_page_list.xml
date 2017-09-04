@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg">
 
     <ImageView
         android:id="@+id/back"
@@ -10,7 +11,7 @@
         android:layout_height="@dimen/list_page_back_height"
         android:layout_marginLeft="@dimen/list_page_back_margin_left"
         android:layout_marginTop="@dimen/list_page_back_margin_top"
-        android:src="@drawable/list_back" />
+        android:src="@drawable/list_back"/>
 
     <RelativeLayout
         android:id="@+id/search_layout"
@@ -27,7 +28,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/list_page_search_icon_margin_right"
-            android:src="@drawable/icon_search" />
+            android:src="@drawable/icon_search"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -35,12 +36,13 @@
             android:layout_marginLeft="@dimen/list_page_search_editbox_margin"
             android:layout_marginRight="@dimen/list_page_search_editbox_margin"
             android:background="#00000000"
+            android:cursorVisible="false"
             android:gravity="center_vertical"
             android:hint="红色大衣"
             android:singleLine="true"
             android:textColor="#000000"
             android:textColorHint="#757575"
-            android:textSize="9sp" />
+            android:textSize="9sp"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -55,7 +57,7 @@
 
         <ImageView
             android:layout_width="@dimen/list_page_speech_item_width"
-            android:layout_height="@dimen/list_page_speech_item_height" />
+            android:layout_height="@dimen/list_page_speech_item_height"/>
 
     </LinearLayout>
 
@@ -70,20 +72,26 @@
             android:layout_width="@dimen/list_page_content_line_width"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/list_page_content_line_x"
-            android:src="@drawable/list_page_content_line" />
+            android:src="@drawable/list_page_content_line"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/dress_content_list_view"
-            android:layout_width="800dp"
+        <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+            android:id="@+id/dress_content_area"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/content_line"
-            android:scrollbars="none" />
+            android:layout_toRightOf="@+id/content_line">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/dress_content_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"/>
+        </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/shop_content_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/content_line" />
+            android:layout_toLeftOf="@+id/content_line"/>
     </RelativeLayout>
 
 </RelativeLayout>

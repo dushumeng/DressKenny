@@ -41,6 +41,7 @@
     <dimen name="list_page_content_line_width">9dp</dimen>
     <dimen name="list_page_content_line_x">125dp</dimen>
     <dimen name="list_page_content_dress_content_width">211dp</dimen>
+    <dimen name="list_page_content_dress_content_padding">7dp</dimen>
     <dimen name="list_page_content_dress_content_item_width">191dp</dimen>
     <dimen name="list_page_content_dress_content_item_height">266dp</dimen>
     <dimen name="list_page_content_dress_content_item_margin">10dp</dimen>

@@ -49,4 +49,6 @@ dependencies {
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
+    compile 'com.lcodecorex:tkrefreshlayout:1.0.7'
+    compile files('libs/com.baidu.tts_2.3.0.jar')
 }

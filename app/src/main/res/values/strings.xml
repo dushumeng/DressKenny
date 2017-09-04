@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">DressKenny</string>
     <string name="robot_tip">你好！我是搭配智能机器人，你可以问我什么衣服怎么搭配，例如，红色大衣。我会帮你找红色大衣的穿搭哦～</string>
+
+    <!--baidu info-->
+    <string name="baidu_app_id">10070416</string>
+    <string name="baidu_api_key">xKde1NdGLTCXyzEES0tq530D</string>
+    <string name="baidu_secret_key">whf5Tz7ELQ2GupuLj2o3ZGTkoOogIRIi</string>
 </resources>
