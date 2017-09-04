@@ -8,7 +8,7 @@
         android:layout_width="@dimen/list_page_content_dress_content_item_width"
         android:layout_height="@dimen/list_page_content_dress_content_item_height"
         android:layout_centerInParent="true"
-        android:src="@drawable/dress_image_bg" android:visibility="gone"/>
+        android:src="@drawable/dress_image_bg" android:visibility="visible"/>
 
     <ImageView
         android:id="@+id/dress_item"
