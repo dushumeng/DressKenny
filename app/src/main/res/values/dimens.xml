@@ -35,12 +35,12 @@
     <dimen name="list_page_speech_item_margin_top">11dp</dimen>
     <dimen name="list_page_speech_item_margin_left">20dp</dimen>
     <dimen name="list_page_content_layout_width">620dp</dimen>
-    <dimen name="list_page_content_layout_height">260dp</dimen>
+    <dimen name="list_page_content_layout_height">280dp</dimen>
     <dimen name="list_page_content_layout_x">25dp</dimen>
     <dimen name="list_page_content_layout_y">75dp</dimen>
     <dimen name="list_page_content_line_width">9dp</dimen>
     <dimen name="list_page_content_line_x">125dp</dimen>
-    <dimen name="list_page_content_dress_content_width">211dp</dimen>
+    <dimen name="list_page_content_dress_content_width">201dp</dimen>
     <dimen name="list_page_content_dress_content_padding">7dp</dimen>
     <dimen name="list_page_content_dress_content_item_width">191dp</dimen>
     <dimen name="list_page_content_dress_content_item_height">266dp</dimen>

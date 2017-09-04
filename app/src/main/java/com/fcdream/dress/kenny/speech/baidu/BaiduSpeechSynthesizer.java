@@ -49,7 +49,10 @@ public class BaiduSpeechSynthesizer extends BaseSpeechSynthesizer implements Spe
 
     @Override
     public void init(Context context) {
-        mSpeechSynthesizer.release();
+        if (mSpeechSynthesizer != null) {
+            mSpeechSynthesizer.release();
+        }
+        mSpeechSynthesizer = SpeechSynthesizer.getInstance();
         mSpeechSynthesizer.setContext(context);
         mSpeechSynthesizer.setSpeechSynthesizerListener(this);
         mSpeechSynthesizer.setApiKey(context.getString(R.string.baidu_api_key), context.getString(R.string.baidu_secret_key));
@@ -103,7 +106,7 @@ public class BaiduSpeechSynthesizer extends BaseSpeechSynthesizer implements Spe
         if (listener != null) {
             listener.onSynthesizeStart(s);
         }
-        MyLog.d(TAG, "onSynthesizeStart:" + s);
+        MyLog.i(TAG, "onSynthesizeStart:" + s);
     }
 
     @Override
@@ -111,7 +114,7 @@ public class BaiduSpeechSynthesizer extends BaseSpeechSynthesizer implements Spe
         if (listener != null) {
             listener.onSynthesizeDataArrived(s, bytes, i);
         }
-        MyLog.d(TAG, "onSynthesizeDataArrived:" + s + "," + i);
+        MyLog.i(TAG, "onSynthesizeDataArrived:" + s + "," + i);
     }
 
     @Override
@@ -119,7 +122,7 @@ public class BaiduSpeechSynthesizer extends BaseSpeechSynthesizer implements Spe
         if (listener != null) {
             listener.onSynthesizeFinish(s);
         }
-        MyLog.d(TAG, "onSynthesizeFinish:" + s);
+        MyLog.i(TAG, "onSynthesizeFinish:" + s);
     }
 
     @Override
@@ -127,7 +130,7 @@ public class BaiduSpeechSynthesizer extends BaseSpeechSynthesizer implements Spe
         if (listener != null) {
             listener.onSpeechStart(s);
         }
-        MyLog.d(TAG, "onSpeechStart:" + s);
+        MyLog.i(TAG, "onSpeechStart:" + s);
     }
 
     @Override
@@ -135,7 +138,7 @@ public class BaiduSpeechSynthesizer extends BaseSpeechSynthesizer implements Spe
         if (listener != null) {
             listener.onSpeechProgressChanged(s, i);
         }
-        MyLog.d(TAG, "onSpeechProgressChanged:" + s + "," + i);
+        MyLog.i(TAG, "onSpeechProgressChanged:" + s + "," + i);
     }
 
     @Override
@@ -143,7 +146,7 @@ public class BaiduSpeechSynthesizer extends BaseSpeechSynthesizer implements Spe
         if (listener != null) {
             listener.onSpeechFinish(s);
         }
-        MyLog.d(TAG, "onSpeechFinish:" + s);
+        MyLog.i(TAG, "onSpeechFinish:" + s);
     }
 
     @Override
@@ -151,7 +154,7 @@ public class BaiduSpeechSynthesizer extends BaseSpeechSynthesizer implements Spe
         if (listener != null) {
             listener.onError(s, new SpeechSynthesizerError(speechError.code, speechError.description));
         }
-        MyLog.d(TAG, "onError:" + s + "," + speechError);
+        MyLog.i(TAG, "onError:" + s + "," + speechError);
     }
 
     private void printEngineInfo() {

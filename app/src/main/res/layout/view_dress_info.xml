@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="@dimen/list_page_content_dress_content_width"
-                android:layout_height="@dimen/list_page_content_dress_content_item_height">
+    android:layout_width="@dimen/list_page_content_dress_content_width"
+    android:layout_height="@dimen/list_page_content_dress_content_item_height">
 
-
-    <RelativeLayout
+    <ImageView
         android:id="@+id/dress_item_bg"
         android:layout_width="@dimen/list_page_content_dress_content_item_width"
         android:layout_height="@dimen/list_page_content_dress_content_item_height"
         android:layout_centerInParent="true"
-        android:background="@drawable/dress_image_bg">
+        android:src="@drawable/dress_image_bg" android:visibility="gone"/>
 
-        <ImageView
-            android:id="@+id/dress_item"
-            android:layout_width="@dimen/list_page_content_dress_item_width"
-            android:layout_height="@dimen/list_page_content_dress_item_height"
-            android:layout_centerInParent="true"
-            android:scaleType="centerInside"/>
-    </RelativeLayout>
-
+    <ImageView
+        android:id="@+id/dress_item"
+        android:layout_width="@dimen/list_page_content_dress_item_width"
+        android:layout_height="@dimen/list_page_content_dress_item_height"
+        android:layout_centerInParent="true" />
 </RelativeLayout>

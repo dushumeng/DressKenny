@@ -9,7 +9,6 @@ import android.view.View;
  */
 
 public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
-
     int mSpace;
 
     @Override
