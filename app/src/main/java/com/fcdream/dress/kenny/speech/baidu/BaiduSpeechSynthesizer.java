@@ -10,6 +10,7 @@ import com.baidu.tts.client.SpeechSynthesizer;
 import com.baidu.tts.client.SpeechSynthesizerListener;
 import com.baidu.tts.client.SynthesizerTool;
 import com.baidu.tts.client.TtsMode;
+import com.fcdream.dress.kenny.App;
 import com.fcdream.dress.kenny.R;
 import com.fcdream.dress.kenny.bo.MyFilePathEntity;
 import com.fcdream.dress.kenny.log.MyLog;
@@ -104,7 +105,7 @@ public class BaiduSpeechSynthesizer extends BaseSpeechSynthesizer implements Spe
     @Override
     public void onSynthesizeStart(String s) {
         if (listener != null) {
-            listener.onSynthesizeStart(s);
+            App.postToMainLooper(() -> listener.onSynthesizeStart(s));
         }
         MyLog.i(TAG, "onSynthesizeStart:" + s);
     }
@@ -112,15 +113,15 @@ public class BaiduSpeechSynthesizer extends BaseSpeechSynthesizer implements Spe
     @Override
     public void onSynthesizeDataArrived(String s, byte[] bytes, int i) {
         if (listener != null) {
-            listener.onSynthesizeDataArrived(s, bytes, i);
+            App.postToMainLooper(() -> listener.onSynthesizeDataArrived(s, bytes, i));
         }
-        MyLog.i(TAG, "onSynthesizeDataArrived:" + s + "," + i);
+//        MyLog.i(TAG, "onSynthesizeDataArrived:" + s + "," + i);
     }
 
     @Override
     public void onSynthesizeFinish(String s) {
         if (listener != null) {
-            listener.onSynthesizeFinish(s);
+            App.postToMainLooper(() -> listener.onSynthesizeFinish(s));
         }
         MyLog.i(TAG, "onSynthesizeFinish:" + s);
     }
@@ -128,7 +129,7 @@ public class BaiduSpeechSynthesizer extends BaseSpeechSynthesizer implements Spe
     @Override
     public void onSpeechStart(String s) {
         if (listener != null) {
-            listener.onSpeechStart(s);
+            App.postToMainLooper(() -> listener.onSpeechStart(s));
         }
         MyLog.i(TAG, "onSpeechStart:" + s);
     }
@@ -136,7 +137,7 @@ public class BaiduSpeechSynthesizer extends BaseSpeechSynthesizer implements Spe
     @Override
     public void onSpeechProgressChanged(String s, int i) {
         if (listener != null) {
-            listener.onSpeechProgressChanged(s, i);
+            App.postToMainLooper(() -> listener.onSpeechProgressChanged(s, i));
         }
 //        MyLog.i(TAG, "onSpeechProgressChanged:" + s + "," + i);
     }
@@ -144,7 +145,7 @@ public class BaiduSpeechSynthesizer extends BaseSpeechSynthesizer implements Spe
     @Override
     public void onSpeechFinish(String s) {
         if (listener != null) {
-            listener.onSpeechFinish(s);
+            App.postToMainLooper(() -> listener.onSpeechFinish(s));
         }
         MyLog.i(TAG, "onSpeechFinish:" + s);
     }
@@ -152,7 +153,7 @@ public class BaiduSpeechSynthesizer extends BaseSpeechSynthesizer implements Spe
     @Override
     public void onError(String s, SpeechError speechError) {
         if (listener != null) {
-            listener.onError(s, new SpeechSynthesizerError(speechError.code, speechError.description));
+            App.postToMainLooper(() -> listener.onError(s, new SpeechSynthesizerError(speechError.code, speechError.description)));
         }
         MyLog.i(TAG, "onError:" + s + "," + speechError);
     }

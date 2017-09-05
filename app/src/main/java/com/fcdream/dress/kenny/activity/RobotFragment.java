@@ -54,21 +54,8 @@ public class RobotFragment extends BaseMainPageFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (ifaceReference != null && ifaceReference.get() != null) {
-            ifaceReference.get().getSpeech().setSpeechListener(this);
-            ifaceReference.get().getMediaPlayer().setEventListener(this);
-        }
-    }
-
-    @Override
     public void onStop() {
         super.onStop();
-        if (isFragmentIfaceValid()) {
-            ifaceReference.get().getSpeech().setSpeechListener(null);
-            ifaceReference.get().getMediaPlayer().setEventListener(null);
-        }
         dealEndTips();
         dealEndSpeech();
     }

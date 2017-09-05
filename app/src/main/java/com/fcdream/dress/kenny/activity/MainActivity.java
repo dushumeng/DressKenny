@@ -66,7 +66,7 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
         }
         transaction.commit();
         if (TextUtils.equals(type, TYPE_MAIN_LIST)) {
-            mainListFragment.startSearch("红色大衣");
+            mainListFragment.dealSearch("红色大衣");
         }
     }
 
@@ -86,7 +86,7 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
             return;
         }
         show(TYPE_MAIN_LIST);
-        mainListFragment.startSearch(info);
+        mainListFragment.dealSearch(info);
     }
 
     @Override

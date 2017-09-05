@@ -1,9 +1,11 @@
 package com.fcdream.dress.kenny.activity;
 
 import android.app.Activity;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.fcdream.dress.kenny.App;
@@ -15,13 +17,17 @@ import com.fcdream.dress.kenny.bus.MyCallback;
 import com.fcdream.dress.kenny.bus.TestBus;
 import com.fcdream.dress.kenny.ioc.BindLayout;
 import com.fcdream.dress.kenny.ioc.BindView;
+import com.fcdream.dress.kenny.log.MyLog;
 import com.fcdream.dress.kenny.speech.BaseSpeechSynthesizer;
 import com.fcdream.dress.kenny.speech.SpeechFactory;
 import com.fcdream.dress.kenny.speech.SpeechSynthesizerError;
 import com.fcdream.dress.kenny.utils.SpaceItemDecoration;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -54,14 +60,30 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     @BindView(id = R.id.speech_speak, clickEvent = "dealSpeakImageClick", click = true)
     private ImageView speakImage;
 
+    @BindView(id = R.id.search_edit_text)
+    private EditText searchEditText;
+
     private boolean canSpeak = true;
 
     LinearLayoutManager dressLayoutManager;
 
     BaseSpeechSynthesizer speechSynthesizer;
 
+    AnimationDrawable speakAnimation;
+
     @Override
     protected void initView(Activity activity, View sourceView) {
+        dealChangeSpeakStatus(STATE_SPEAK_NORMAL);
+        searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    dealSearch(searchEditText.getText().toString());
+                }
+                return false;
+            }
+        });
+        speakAnimation = (AnimationDrawable) getActivity().getResources().getDrawable(R.drawable.anim_speak);
         dressLayoutManager = new LinearLayoutManager(activity);
         dressLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         dressRecyclerView.setLayoutManager(dressLayoutManager);
@@ -70,6 +92,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         dressItemAdapter = new DressItemAdapter(getActivity(), this);
         dressRecyclerView.setAdapter(dressItemAdapter);
         speechSynthesizer = SpeechFactory.createSpeechSynthesizer(SpeechFactory.TYPE_BAIDU);
+        speechSynthesizer.setSpeechSynthesizerListener(this);
     }
 
     @Override
@@ -77,7 +100,11 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     }
 
-    public void startSearch(String currentSearchKey) {
+    public void dealSearch(String currentSearchKey) {
+        if (TextUtils.isEmpty(currentSearchKey)) {
+            return;
+        }
+        searchEditText.setText(currentSearchKey);
         if (TextUtils.equals(currentSearchKey, this.currentSearchKey)) {
 
         } else {
@@ -87,17 +114,12 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
             @Override
             public void callback(boolean success, List<DressItem> list) {
+                if (list == null || list.size() == 0) {
+                    return;
+                }
+                dressItemAdapter.getDataList().clear();
                 dressItemAdapter.getDataList().addAll(list);
                 dressItemAdapter.notifyDataSetChanged();
-
-//                App.postDelayToMainLooper(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        //autoScroll();
-//                        speechSynthesizer.init(getActivity());
-//                        speechSynthesizer.speak(list.get(0).title);
-//                    }
-//                }, 2000);
 
             }
         }, "q", currentSearchKey);
@@ -114,45 +136,30 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         return BaseMainFragmentIface.TYPE_MAIN_LIST;
     }
 
-    private int currentIndex = 0;
-
     public void autoScroll() {
-        Log.i("dsminfo", dressLayoutManager.findFirstVisibleItemPosition() + "-" + dressLayoutManager.findFirstCompletelyVisibleItemPosition());
-        dressRecyclerView.smoothScrollToPosition(10);
-        Log.i("dsminfo", dressLayoutManager.findFirstVisibleItemPosition() + "-" + dressLayoutManager.findFirstCompletelyVisibleItemPosition());
-//        int firstItem = dressLayoutManager.findFirstVisibleItemPosition();
-//        int scrollTo = firstItem + 1;
-//        if (scrollTo >= dressItemAdapter.getItemCount()) {
-//            return;
-//        }
-//        moveToPosition(dressLayoutManager, dressRecyclerView, scrollTo);
-//
+
+        int firstCompletelyVisibleItemPosition = dressLayoutManager.findFirstCompletelyVisibleItemPosition();
+        MyLog.i("dsminfo", firstCompletelyVisibleItemPosition + "-" + dressRecyclerView.getChildCount());
+        int scrollToPosition = firstCompletelyVisibleItemPosition;
+        if (firstCompletelyVisibleItemPosition != 0) {
+            scrollToPosition = firstCompletelyVisibleItemPosition + 1;
+        }
+        if (scrollToPosition >= dressRecyclerView.getChildCount()) {
+            return;
+        }
+        dressRecyclerView.smoothScrollToPosition(scrollToPosition);
         DressItemAdapter.ViewHolder childViewHolder = (DressItemAdapter.ViewHolder) dressRecyclerView.getChildViewHolder(dressRecyclerView.getChildAt(2));
         childViewHolder.bgImage.setVisibility(View.VISIBLE);
-//        if (scrollTo - 1 >= 0) {
-//            childViewHolder = (DressItemAdapter.ViewHolder) dressRecyclerView.getChildViewHolder(dressRecyclerView.getChildAt(scrollTo - 1));
-//            childViewHolder.bgImage.setVisibility(View.GONE);
-//        }
-//
+        if (scrollToPosition - 1 >= 0) {
+            childViewHolder = (DressItemAdapter.ViewHolder) dressRecyclerView.getChildViewHolder(dressRecyclerView.getChildAt(scrollToPosition - 1));
+            childViewHolder.bgImage.setVisibility(View.GONE);
+        }
         App.postDelayToMainLooper(new Runnable() {
             @Override
             public void run() {
                 autoScroll();
             }
         }, 5000);
-    }
-
-    public static void moveToPosition(LinearLayoutManager manager, RecyclerView mRecyclerView, int n) {
-        int firstItem = manager.findFirstVisibleItemPosition();
-        int lastItem = manager.findLastVisibleItemPosition();
-        if (n <= firstItem) {
-            mRecyclerView.smoothScrollToPosition(n);
-        } else if (n <= lastItem) {
-            int top = mRecyclerView.getChildAt(n - firstItem).getTop();
-            mRecyclerView.scrollBy(0, top);
-        } else {
-            mRecyclerView.scrollToPosition(n);
-        }
     }
 
     @Override
@@ -172,7 +179,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     @Override
     public void onSpeechStart(String s) {
-
+        dealChangeSpeakStatus(STATE_SPEAKING);
     }
 
     @Override
@@ -182,7 +189,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     @Override
     public void onSpeechFinish(String s) {
-
+        dealChangeSpeakStatus(STATE_SPEAK_NORMAL);
     }
 
     @Override
@@ -192,10 +199,9 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     @Override
     public void onItemClick(View view, int position, Object object) {
-//        if (object != null && object instanceof DressItem) {
-//            speechSynthesizer.init(getActivity());
-//            speechSynthesizer.speak(((DressItem) object).title);
-//        }
+        if (canSpeak && object != null && object instanceof DressItem) {
+            dealStartSpeak(((DressItem) object).title);
+        }
     }
 
     public void dealSpeakImageClick(View view) {
@@ -203,10 +209,45 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         if (!canSpeak && isFragmentIfaceValid()) {
             speechSynthesizer.stop();
         }
-        if (canSpeak) {
+        dealChangeSpeakStatus(canSpeak ? STATE_SPEAK_NORMAL : STATE_SPEAK_DISABLE);
+    }
+
+    public void dealMicImageClick(View view) {
+        if (isFragmentIfaceValid()) {
+            dealStopSpeak();
+            ifaceReference.get().getSpeech().start();
+        }
+    }
+
+    private static String STATE_SPEAKING = "state_speaking";
+    private static String STATE_SPEAK_NORMAL = "state_speak_normal";
+    private static String STATE_SPEAK_DISABLE = "state_speak_disable";
+
+    private void dealChangeSpeakStatus(String state) {
+        if (TextUtils.equals(state, STATE_SPEAKING)) {
+            speakImage.setImageDrawable(speakAnimation);
+            speakAnimation.start();
+        } else if (TextUtils.equals(state, STATE_SPEAK_NORMAL)) {
+            speakAnimation.stop();
             speakImage.setImageResource(R.drawable.speak4);
-        } else {
+        } else if (TextUtils.equals(state, STATE_SPEAK_DISABLE)) {
+            speakAnimation.stop();
             speakImage.setImageResource(R.drawable.icon_not_speak);
         }
+    }
+
+    @Override
+    public void onListenEnd(String info) {
+        dealSearch(info);
+    }
+
+    private void dealStopSpeak() {
+        speechSynthesizer.destroy();
+        dealChangeSpeakStatus(canSpeak ? STATE_SPEAK_NORMAL : STATE_SPEAK_DISABLE);
+    }
+
+    private void dealStartSpeak(String info) {
+        speechSynthesizer.init(getActivity());
+        speechSynthesizer.speak(info);
     }
 }

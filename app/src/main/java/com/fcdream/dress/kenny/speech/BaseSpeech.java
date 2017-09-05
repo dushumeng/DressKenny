@@ -14,6 +14,8 @@ public abstract class BaseSpeech {
 
     protected SpeechListener speechListener;
 
+    protected String state = STATUS_END;
+
     public BaseSpeech() {
     }
 
