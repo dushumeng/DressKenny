@@ -2,10 +2,13 @@ package com.fcdream.dress.kenny.activity;
 
 import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.fcdream.dress.kenny.App;
@@ -22,6 +25,7 @@ import com.fcdream.dress.kenny.speech.BaseSpeechSynthesizer;
 import com.fcdream.dress.kenny.speech.SpeechFactory;
 import com.fcdream.dress.kenny.speech.SpeechSynthesizerError;
 import com.fcdream.dress.kenny.utils.SpaceItemDecoration;
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.inputmethod.EditorInfo;
@@ -42,7 +46,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     private String currentSearchKey;
 
     @BindView(id = R.id.dress_content_list_view)
-    private RecyclerView dressRecyclerView;
+    private UltimateRecyclerView dressRecyclerView;
 
     private DressItemAdapter dressItemAdapter;
 
@@ -73,6 +77,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     @Override
     protected void initView(Activity activity, View sourceView) {
+        speakAnimation = (AnimationDrawable) getActivity().getResources().getDrawable(R.drawable.anim_speak);
         dealChangeSpeakStatus(STATE_SPEAK_NORMAL);
         searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -83,16 +88,33 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
                 return false;
             }
         });
-        speakAnimation = (AnimationDrawable) getActivity().getResources().getDrawable(R.drawable.anim_speak);
         dressLayoutManager = new LinearLayoutManager(activity);
         dressLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         dressRecyclerView.setLayoutManager(dressLayoutManager);
         dressRecyclerView.setHasFixedSize(true);
+        dressRecyclerView.setEmptyView(R.layout.empty_view, UltimateRecyclerView.EMPTY_KEEP_HEADER);
 //        dressRecyclerView.addItemDecoration(new SpaceItemDecoration((int) getResources().getDimension(R.dimen.list_page_content_dress_content_item_margin)));
+//        dressRecyclerView.setRefreshing(true);
+        dressRecyclerView.reenableLoadmore();
+        dressRecyclerView.setLoadMoreView(getLayoutInflater().inflate(R.layout.custom_bottom_progressbar, null));
+//        dressRecyclerView.setDefaultSwipeToRefreshColorScheme(R.color.google_blue,
+//                R.color.google_green,
+//                R.color.google_red,
+//                R.color.google_yellow);
+//        dressRecyclerView.setParallaxHeader(getLayoutInflater().inflate(R.layout.custom_bottom_progressbar, null));
+        dressRecyclerView.setDefaultOnRefreshListener(() -> {
+            MyLog.i("dsminfo", "refresh!!!");
+        });
+        dressRecyclerView.setOnLoadMoreListener((itemsCount, maxLastVisiblePosition) -> {
+            MyLog.i("dsminfo", "load more!!!");
+        });
         dressItemAdapter = new DressItemAdapter(getActivity(), this);
         dressRecyclerView.setAdapter(dressItemAdapter);
+
         speechSynthesizer = SpeechFactory.createSpeechSynthesizer(SpeechFactory.TYPE_BAIDU);
         speechSynthesizer.setSpeechSynthesizerListener(this);
+
+
     }
 
     @Override
@@ -138,28 +160,28 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     public void autoScroll() {
 
-        int firstCompletelyVisibleItemPosition = dressLayoutManager.findFirstCompletelyVisibleItemPosition();
-        MyLog.i("dsminfo", firstCompletelyVisibleItemPosition + "-" + dressRecyclerView.getChildCount());
-        int scrollToPosition = firstCompletelyVisibleItemPosition;
-        if (firstCompletelyVisibleItemPosition != 0) {
-            scrollToPosition = firstCompletelyVisibleItemPosition + 1;
-        }
-        if (scrollToPosition >= dressRecyclerView.getChildCount()) {
-            return;
-        }
-        dressRecyclerView.smoothScrollToPosition(scrollToPosition);
-        DressItemAdapter.ViewHolder childViewHolder = (DressItemAdapter.ViewHolder) dressRecyclerView.getChildViewHolder(dressRecyclerView.getChildAt(2));
-        childViewHolder.bgImage.setVisibility(View.VISIBLE);
-        if (scrollToPosition - 1 >= 0) {
-            childViewHolder = (DressItemAdapter.ViewHolder) dressRecyclerView.getChildViewHolder(dressRecyclerView.getChildAt(scrollToPosition - 1));
-            childViewHolder.bgImage.setVisibility(View.GONE);
-        }
-        App.postDelayToMainLooper(new Runnable() {
-            @Override
-            public void run() {
-                autoScroll();
-            }
-        }, 5000);
+//        int firstCompletelyVisibleItemPosition = dressLayoutManager.findFirstCompletelyVisibleItemPosition();
+//        MyLog.i("dsminfo", firstCompletelyVisibleItemPosition + "-" + dressRecyclerView.getChildCount());
+//        int scrollToPosition = firstCompletelyVisibleItemPosition;
+//        if (firstCompletelyVisibleItemPosition != 0) {
+//            scrollToPosition = firstCompletelyVisibleItemPosition + 1;
+//        }
+//        if (scrollToPosition >= dressRecyclerView.getChildCount()) {
+//            return;
+//        }
+//        dressRecyclerView.smoothScrollToPosition(scrollToPosition);
+//        DressItemAdapter.ViewHolder childViewHolder = (DressItemAdapter.ViewHolder) dressRecyclerView.getChildViewHolder(dressRecyclerView.getChildAt(2));
+//        childViewHolder.bgImage.setVisibility(View.VISIBLE);
+//        if (scrollToPosition - 1 >= 0) {
+//            childViewHolder = (DressItemAdapter.ViewHolder) dressRecyclerView.getChildViewHolder(dressRecyclerView.getChildAt(scrollToPosition - 1));
+//            childViewHolder.bgImage.setVisibility(View.GONE);
+//        }
+//        App.postDelayToMainLooper(new Runnable() {
+//            @Override
+//            public void run() {
+//                autoScroll();
+//            }
+//        }, 5000);
     }
 
     @Override
