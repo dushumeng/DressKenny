@@ -46,16 +46,15 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     @BindView(id = R.id.back, clickEvent = "dealHandleBack", click = true)
     private ImageView backImage;
 
-    @BindView(id = R.id.speech_robot, clickEvent = "dealRobotImageClick", click = true)
     private ImageView robotImage;
 
     @BindView(id = R.id.speech_mic, clickEvent = "dealMicImageClick", click = true)
     private ImageView micImage;
 
-    @BindView(id = R.id.speech_mic, clickEvent = "dealSpeakImageClick", click = true)
+    @BindView(id = R.id.speech_speak, clickEvent = "dealSpeakImageClick", click = true)
     private ImageView speakImage;
 
-    private boolean canSpeak = false;
+    private boolean canSpeak = true;
 
     LinearLayoutManager dressLayoutManager;
 
@@ -197,5 +196,17 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 //            speechSynthesizer.init(getActivity());
 //            speechSynthesizer.speak(((DressItem) object).title);
 //        }
+    }
+
+    public void dealSpeakImageClick(View view) {
+        canSpeak = !canSpeak;
+        if (!canSpeak && isFragmentIfaceValid()) {
+            speechSynthesizer.stop();
+        }
+        if (canSpeak) {
+            speakImage.setImageResource(R.drawable.speak4);
+        } else {
+            speakImage.setImageResource(R.drawable.icon_not_speak);
+        }
     }
 }

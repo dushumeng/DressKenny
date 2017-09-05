@@ -16,13 +16,20 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if (!isSupportActionBar()) {
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            getSupportActionBar().hide();
+        }
         setContentView(AnnotateUtil.getBindLayoutResId(this));
 
         AnnotateUtil.initBindView(this);
 
         initView();
         initData();
+    }
+
+    protected boolean isSupportActionBar() {
+        return false;
     }
 
     /**

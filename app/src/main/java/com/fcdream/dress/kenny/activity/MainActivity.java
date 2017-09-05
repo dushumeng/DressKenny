@@ -147,7 +147,5 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
 
                     }
                 });
-
-//        super.onBackPressed();
     }
 }
