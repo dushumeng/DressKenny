@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_main_list">
+                android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/back"
@@ -91,7 +90,8 @@
             android:layout_width="@dimen/list_page_content_line_width"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/list_page_content_line_x"
-            android:src="@drawable/list_page_content_line" android:visibility="gone"/>
+            android:src="@drawable/list_page_content_line"
+            android:visibility="gone"/>
 
         <!--<com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout-->
         <!--android:id="@+id/dress_content_area"-->
@@ -103,16 +103,18 @@
             android:id="@+id/dress_content_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_alignWithParentIfMissing="true"
             android:layout_toRightOf="@+id/content_line"
             android:nestedScrollingEnabled="false"
-            android:scrollbars="none" android:layout_alignWithParentIfMissing="true"/>
+            android:scrollbars="none"/>
         <!--</com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/shop_content_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/content_line" android:visibility="gone"/>
+            android:layout_toLeftOf="@+id/content_line"
+            android:visibility="gone"/>
     </RelativeLayout>
 
 </RelativeLayout>

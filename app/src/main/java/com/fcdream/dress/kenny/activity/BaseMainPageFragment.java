@@ -14,7 +14,6 @@ import java.lang.ref.WeakReference;
 public abstract class BaseMainPageFragment extends BaseFragment implements BaseSpeech.SpeechListener
         , XulMediaPlayer.XulMediaPlayerEvents {
 
-
     protected final String TAG = this.getClass().getSimpleName();
 
     protected WeakReference<BaseMainFragmentIface> ifaceReference;

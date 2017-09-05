@@ -138,7 +138,7 @@ public class BaiduSpeechSynthesizer extends BaseSpeechSynthesizer implements Spe
         if (listener != null) {
             listener.onSpeechProgressChanged(s, i);
         }
-        MyLog.i(TAG, "onSpeechProgressChanged:" + s + "," + i);
+//        MyLog.i(TAG, "onSpeechProgressChanged:" + s + "," + i);
     }
 
     @Override

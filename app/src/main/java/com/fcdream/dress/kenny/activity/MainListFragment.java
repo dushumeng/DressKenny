@@ -91,14 +91,14 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
                 dressItemAdapter.getDataList().addAll(list);
                 dressItemAdapter.notifyDataSetChanged();
 
-                App.postDelayToMainLooper(new Runnable() {
-                    @Override
-                    public void run() {
-                        //autoScroll();
-                        speechSynthesizer.init(getActivity());
-                        speechSynthesizer.speak(list.get(0).title);
-                    }
-                }, 2000);
+//                App.postDelayToMainLooper(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        //autoScroll();
+//                        speechSynthesizer.init(getActivity());
+//                        speechSynthesizer.speak(list.get(0).title);
+//                    }
+//                }, 2000);
 
             }
         }, "q", currentSearchKey);
@@ -193,9 +193,9 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     @Override
     public void onItemClick(View view, int position, Object object) {
-        if (object != null && object instanceof DressItem) {
-            speechSynthesizer.init(getActivity());
-            speechSynthesizer.speak(((DressItem) object).title);
-        }
+//        if (object != null && object instanceof DressItem) {
+//            speechSynthesizer.init(getActivity());
+//            speechSynthesizer.speak(((DressItem) object).title);
+//        }
     }
 }

@@ -2,6 +2,7 @@ package com.fcdream.dress.kenny.activity;
 
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.view.Window;
 
 import com.fcdream.dress.kenny.App;
 import com.fcdream.dress.kenny.BaseFragment;

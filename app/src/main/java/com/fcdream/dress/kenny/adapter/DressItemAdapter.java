@@ -44,11 +44,11 @@ public class DressItemAdapter extends RecyclerView.Adapter<DressItemAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         DressItem dressItem = dataList.get(position);
-        Picasso.with(App.getAppInstance())
-                .load(dressItem.img)
-                .resize((int) App.getAppInstance().getResources().getDimension(R.dimen.list_page_content_dress_item_width)
-                        , (int) App.getAppInstance().getResources().getDimension(R.dimen.list_page_content_dress_item_height))
-                .centerCrop().into(holder.dressImage);
+//        Picasso.with(App.getAppInstance())
+//                .load(dressItem.img)
+//                .resize((int) App.getAppInstance().getResources().getDimension(R.dimen.list_page_content_dress_item_width)
+//                        , (int) App.getAppInstance().getResources().getDimension(R.dimen.list_page_content_dress_item_height))
+//                .centerCrop().into(holder.dressImage);
         holder.dressImage.setTag(position);
     }
 
