@@ -11,3 +11,7 @@
 /demo/out
 */.DS_Store
 /local.properties
+/dressKenny.iml
+/gradlew
+/gradlew.bat
+.DS_Store
