@@ -50,13 +50,7 @@ public class RobotFragment extends BaseMainPageFragment {
 
     @Override
     protected void initData(Activity activity) {
-        App.postDelayToMainLooper(new Runnable() {
-            @Override
-            public void run() {
-                //TestBus.testSearch();
-                //dealStartTips();
-            }
-        }, 5 * 1000);
+
     }
 
     @Override
@@ -65,12 +59,22 @@ public class RobotFragment extends BaseMainPageFragment {
         if (ifaceReference != null && ifaceReference.get() != null) {
             ifaceReference.get().getSpeech().setSpeechListener(this);
             ifaceReference.get().getMediaPlayer().setEventListener(this);
-            ifaceReference.get().getSpeech().setSpeechListener(this);
         }
     }
 
-    public void onRobotMicClick(View view) {
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (isFragmentIfaceValid()) {
+            ifaceReference.get().getSpeech().setSpeechListener(null);
+            ifaceReference.get().getMediaPlayer().setEventListener(null);
+        }
+        dealEndTips();
+        dealEndSpeech();
+    }
 
+    public void onRobotMicClick(View view) {
+        dealStartTips();
     }
 
     @Override
@@ -90,6 +94,7 @@ public class RobotFragment extends BaseMainPageFragment {
         if (isFragmentIfaceValid()) {
             ifaceReference.get().handleSpeech(info);
         }
+        dealEndSpeech();
     }
 
     private void dealStartTips() {

@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="color_dress_select_bg">#ff1b756f</color>
+    <color name="color_circle_bg_normal">#00c5b5</color>
+    <color name="color_circle_bg_pressed">#b200c5b5</color>
 </resources>

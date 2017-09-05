@@ -46,6 +46,17 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     @BindView(id = R.id.back, clickEvent = "dealHandleBack", click = true)
     private ImageView backImage;
 
+    @BindView(id = R.id.speech_robot, clickEvent = "dealRobotImageClick", click = true)
+    private ImageView robotImage;
+
+    @BindView(id = R.id.speech_mic, clickEvent = "dealMicImageClick", click = true)
+    private ImageView micImage;
+
+    @BindView(id = R.id.speech_mic, clickEvent = "dealSpeakImageClick", click = true)
+    private ImageView speakImage;
+
+    private boolean canSpeak = false;
+
     LinearLayoutManager dressLayoutManager;
 
     BaseSpeechSynthesizer speechSynthesizer;

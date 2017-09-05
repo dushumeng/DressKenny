@@ -32,8 +32,11 @@
     <dimen name="list_page_speech_layout_height">44dp</dimen>
     <dimen name="list_page_speech_item_width">37dp</dimen>
     <dimen name="list_page_speech_item_height">37dp</dimen>
-    <dimen name="list_page_speech_item_margin_top">11dp</dimen>
-    <dimen name="list_page_speech_item_margin_left">20dp</dimen>
+    <dimen name="list_page_speech_item_robot_width">41dp</dimen>
+    <dimen name="list_page_speech_item_robot_height">36dp</dimen>
+    <dimen name="list_page_speech_item_margin">10dp</dimen>
+    <dimen name="list_page_speech_layout_y">11dp</dimen>
+    <dimen name="list_page_speech_layout_x">20dp</dimen>
     <dimen name="list_page_content_layout_width">620dp</dimen>
     <dimen name="list_page_content_layout_height">280dp</dimen>
     <dimen name="list_page_content_layout_x">25dp</dimen>
