@@ -23,9 +23,25 @@ android {
             enabled true
         }
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            //命名规则，这个就是主要演示一下groovy闭包操作的
+            //前面我们知道多渠道打包还是用python来完成速度是最快的
+            output.outputFile = new File(
+                    output.outputFile.parent,
+                    "custom-${variant.buildType.name}-${variant.versionName}.apk".toLowerCase())
+            //把unaligned apk删除掉 看着碍眼
+            File unaligned=output.packageApplication.outputFile
+            unaligned.delete()
+
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            shrinkResources true
             //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.fcdream
         }
@@ -48,8 +64,11 @@ dependencies {
     })
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.3'
     compile 'com.alibaba:fastjson:1.1.62.android'
-    compile 'com.squareup.picasso:picasso:2.5.2'
     testCompile 'junit:junit:4.12'
     compile files('libs/VoiceRecognition-2.1.20.jar')
     compile 'com.android.support:recyclerview-v7:25.4.0'

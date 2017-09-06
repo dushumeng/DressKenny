@@ -2,32 +2,33 @@ package com.fcdream.dress.kenny.activity;
 
 import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 
-import com.fcdream.dress.kenny.App;
 import com.fcdream.dress.kenny.R;
 import com.fcdream.dress.kenny.adapter.DressItemAdapter;
 import com.fcdream.dress.kenny.adapter.OnItemClickListener;
+import com.fcdream.dress.kenny.bo.CommonEntity;
 import com.fcdream.dress.kenny.bo.DressItem;
 import com.fcdream.dress.kenny.bus.MyCallback;
 import com.fcdream.dress.kenny.bus.TestBus;
+import com.fcdream.dress.kenny.helper.MyTime;
 import com.fcdream.dress.kenny.ioc.BindLayout;
 import com.fcdream.dress.kenny.ioc.BindView;
 import com.fcdream.dress.kenny.log.MyLog;
+import com.fcdream.dress.kenny.message.XulSubscriber;
 import com.fcdream.dress.kenny.speech.BaseSpeechSynthesizer;
 import com.fcdream.dress.kenny.speech.SpeechFactory;
 import com.fcdream.dress.kenny.speech.SpeechSynthesizerError;
-import com.fcdream.dress.kenny.utils.SpaceItemDecoration;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -39,7 +40,8 @@ import java.util.List;
 public class MainListFragment extends BaseMainPageFragment implements BaseSpeechSynthesizer.SpeechSynthesizerListener
         , OnItemClickListener {
 
-    private String currentSearchKey;
+    private static final int AUTO_SCROLL_CHECK_TIME_LEN = 1 * 60 * 1000;
+    private static final int MSG_AUTO_SCROLL = 111;
 
     @BindView(id = R.id.dress_content_list_view)
     private RecyclerView dressRecyclerView;
@@ -65,11 +67,26 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     private boolean canSpeak = true;
 
+    private boolean isAutoScroll = true;
+    private long lastTouchTime = 0;
+
+    private String currentSearchKey;
+
     LinearLayoutManager dressLayoutManager;
 
     BaseSpeechSynthesizer speechSynthesizer;
 
     AnimationDrawable speakAnimation;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == MSG_AUTO_SCROLL) {
+                autoScroll((int) msg.obj);
+            }
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected void initView(Activity activity, View sourceView) {
@@ -97,7 +114,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     }
 
-    public void dealSearch(String currentSearchKey) {
+    private void dealSearch(String currentSearchKey) {
         if (TextUtils.isEmpty(currentSearchKey)) {
             return;
         }
@@ -133,7 +150,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         return BaseMainFragmentIface.TYPE_MAIN_LIST;
     }
 
-    public void autoScroll() {
+    public void autoScroll(int scrollPostion) {
 
         int firstCompletelyVisibleItemPosition = dressLayoutManager.findFirstCompletelyVisibleItemPosition();
         MyLog.i("dsminfo", firstCompletelyVisibleItemPosition + "-" + dressRecyclerView.getChildCount());
@@ -151,12 +168,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
             childViewHolder = (DressItemAdapter.ViewHolder) dressRecyclerView.getChildViewHolder(dressRecyclerView.getChildAt(scrollToPosition - 1));
             childViewHolder.bgImage.setVisibility(View.GONE);
         }
-        App.postDelayToMainLooper(new Runnable() {
-            @Override
-            public void run() {
-                autoScroll();
-            }
-        }, 5000);
+
     }
 
     @Override
@@ -246,5 +258,34 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     private void dealStartSpeak(String info) {
         speechSynthesizer.init(getActivity());
         speechSynthesizer.speak(info);
+    }
+
+    @Override
+    public void onShow(Object object) {
+        if (object != null && object instanceof String) {
+            dealSearch((String) object);
+        }
+    }
+
+    @Override
+    public boolean handleTouchEvent(MotionEvent event) {
+        lastTouchTime = MyTime.currentTimeMillis();
+        isAutoScroll = false;
+        handler.removeMessages(MSG_AUTO_SCROLL);
+        return super.handleTouchEvent(event);
+    }
+
+    @XulSubscriber(tag = CommonEntity.MESSAGE_ONE_SECOND)
+    public void dealUpdate(Object obj) {
+        // TODO: 2017/9/6 检查当前是否需要自动滚动
+        if (!isAutoScroll && MyTime.currentTimeMillis() - lastTouchTime > AUTO_SCROLL_CHECK_TIME_LEN) {
+            startAutoScroll();
+        }
+    }
+
+    private void startAutoScroll() {
+        isAutoScroll = true;
+        int scrollPosition = dressLayoutManager.findFirstCompletelyVisibleItemPosition();
+        autoScroll(scrollPosition);
     }
 }

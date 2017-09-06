@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.fcdream.dress.kenny.ioc.AnnotateUtil;
 import com.fcdream.dress.kenny.log.MyLog;
+import com.fcdream.dress.kenny.message.XulMessageCenter;
 
 /**
  * Created by shmdu on 2017/8/31.
@@ -50,11 +51,12 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment imple
         AnnotateUtil.invokeMehode(v, this);
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         MyLog.d(TAG_LOG, "fragment---onCreate");
         super.onCreate(savedInstanceState);
+
+        XulMessageCenter.getDefault().register(this);
     }
 
     @Override
@@ -84,6 +86,7 @@ public abstract class BaseFragment extends android.support.v4.app.Fragment imple
     @Override
     public void onDestroy() {
         MyLog.d(TAG_LOG, "fragment---onDestroy");
+        XulMessageCenter.getDefault().unregister(this);
         super.onDestroy();
     }
 

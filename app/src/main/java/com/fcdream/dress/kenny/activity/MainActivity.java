@@ -2,10 +2,11 @@ package com.fcdream.dress.kenny.activity;
 
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.view.Window;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.fcdream.dress.kenny.App;
-import com.fcdream.dress.kenny.BaseFragment;
 import com.fcdream.dress.kenny.BaseFragmentActivity;
 import com.fcdream.dress.kenny.R;
 import com.fcdream.dress.kenny.ioc.BindLayout;
@@ -15,7 +16,6 @@ import com.fcdream.dress.kenny.player.impl.XulAndroidPlayer;
 import com.fcdream.dress.kenny.speech.BaseSpeech;
 import com.fcdream.dress.kenny.speech.SpeechFactory;
 import com.fcdream.dress.kenny.utils.GeneralUtils;
-import com.fcdream.dress.kenny.utils.MessageUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,13 +25,17 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private Map<String, BaseFragment> fragmentMap = new HashMap<>();
+    /* 双击退出时间间隔 */
+    private static final int DEFAULT_TIME_LEN = 2 * 1000;
+    // 退出时间间隔
+    private long exitTime = 0;
 
-    private RobotFragment robotFragment;
-    private MainListFragment mainListFragment;
+    private Map<String, BaseMainPageFragment> fragmentMap = new HashMap<>();
 
     private XulMediaPlayer mediaPlayer;
     private BaseSpeech baseSpeech;
+
+    private BaseMainPageFragment showFragment;
 
     @Override
     protected void initView() {
@@ -39,14 +43,15 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
         mediaPlayer.init(this);
         baseSpeech = SpeechFactory.createSpeech(SpeechFactory.TYPE_BAIDU);
         baseSpeech.init(this);
-        robotFragment = (RobotFragment) getSupportFragmentManager().findFragmentById(R.id.layout_robot);
+        RobotFragment robotFragment = (RobotFragment) getSupportFragmentManager().findFragmentById(R.id.layout_robot);
         robotFragment.setFragmentIface(this);
-        mainListFragment = (MainListFragment) getSupportFragmentManager().findFragmentById(R.id.layout_main_list);
+        MainListFragment mainListFragment = (MainListFragment) getSupportFragmentManager().findFragmentById(R.id.layout_main_list);
         mainListFragment.setFragmentIface(this);
 
         fragmentMap.put(robotFragment.getFragmentType(), robotFragment);
         fragmentMap.put(mainListFragment.getFragmentType(), mainListFragment);
-        show(TYPE_MAIN_LIST);
+        //测试
+        show(TYPE_MAIN_LIST, "红色大衣");
     }
 
     @Override
@@ -54,19 +59,20 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
 
     }
 
-    private void show(String type) {
+    private void show(String type, Object param) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         for (String key : fragmentMap.keySet()) {
-            BaseFragment baseFragment = fragmentMap.get(key);
+            BaseMainPageFragment baseFragment = fragmentMap.get(key);
             if (TextUtils.equals(type, key)) {
+                showFragment = baseFragment;
                 transaction.show(baseFragment);
             } else {
                 transaction.hide(baseFragment);
             }
         }
         transaction.commit();
-        if (TextUtils.equals(type, TYPE_MAIN_LIST)) {
-            mainListFragment.dealSearch("红色大衣");
+        if (showFragment != null) {
+            showFragment.onShow(param);
         }
     }
 
@@ -85,14 +91,13 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
         if (TextUtils.isEmpty(info)) {
             return;
         }
-        show(TYPE_MAIN_LIST);
-        mainListFragment.dealSearch(info);
+        show(TYPE_MAIN_LIST, info);
     }
 
     @Override
     public void dealFragmentBack(BaseMainPageFragment fragment) {
         if (fragment != null && TextUtils.equals(fragment.getFragmentType(), TYPE_MAIN_LIST)) {
-            show(TYPE_ROBOT);
+            show(TYPE_ROBOT, null);
         }
     }
 
@@ -132,20 +137,28 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
     }
 
     @Override
-    public void onBackPressed() {
-
-        if (GeneralUtils.isHomeApp(App.getAppInstance())) {
-            MyLog.d(TAG, "app is Launcher,skip backPressed");
-            return;
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (GeneralUtils.isHomeApp(App.getAppInstance())) {
+                MyLog.d(TAG, "app is Launcher,skip backPressed");
+            } else if (System.currentTimeMillis() - exitTime < DEFAULT_TIME_LEN) {
+                finish();
+            } else {
+                Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            }
+            return true;
         }
+        return super.onKeyDown(keyCode, event);
+    }
 
-        MessageUtils.showConfirmDialog(this, "确认", "确认退出APP？"
-                , MessageUtils.BUTTON_CONFIRM, MessageUtils.BUTTON_CANCEL, (dialogInterface, i) -> {
-                    if (i == MessageUtils.BUTTON_CONFIRM) {
-                        finish();
-                    } else if (i == MessageUtils.BUTTON_CANCEL) {
-
-                    }
-                });
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (showFragment != null && showFragment.handleTouchEvent(event)) {
+                return true;
+            }
+        }
+        return super.onTouchEvent(event);
     }
 }

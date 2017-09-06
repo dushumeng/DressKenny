@@ -1,5 +1,7 @@
 package com.fcdream.dress.kenny.activity;
 
+import android.view.MotionEvent;
+
 import com.fcdream.dress.kenny.BaseFragment;
 import com.fcdream.dress.kenny.log.MyLog;
 import com.fcdream.dress.kenny.player.XulMediaPlayer;
@@ -114,5 +116,13 @@ public abstract class BaseMainPageFragment extends BaseFragment implements BaseS
             ifaceReference.get().getSpeech().setSpeechListener(null);
             ifaceReference.get().getMediaPlayer().setEventListener(null);
         }
+    }
+
+    public void onShow(Object object) {
+
+    }
+
+    public boolean handleTouchEvent(MotionEvent event) {
+        return false;
     }
 }

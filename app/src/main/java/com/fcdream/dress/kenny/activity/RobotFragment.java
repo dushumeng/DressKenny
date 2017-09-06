@@ -3,22 +3,16 @@ package com.fcdream.dress.kenny.activity;
 import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fcdream.dress.kenny.App;
-import com.fcdream.dress.kenny.BaseFragment;
 import com.fcdream.dress.kenny.R;
-import com.fcdream.dress.kenny.bus.TestBus;
 import com.fcdream.dress.kenny.ioc.BindLayout;
 import com.fcdream.dress.kenny.ioc.BindView;
 import com.fcdream.dress.kenny.player.XulMediaPlayer;
-import com.fcdream.dress.kenny.speech.BaseSpeech;
 import com.fcdream.dress.kenny.utils.MessageUtils;
-
-import java.lang.ref.WeakReference;
 
 /**
  * Created by shmdu on 2017/8/31.

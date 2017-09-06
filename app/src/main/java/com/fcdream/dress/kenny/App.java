@@ -3,6 +3,9 @@ package com.fcdream.dress.kenny;
 import android.app.Application;
 import android.os.Handler;
 
+import com.fcdream.dress.kenny.bo.CommonEntity;
+import com.fcdream.dress.kenny.message.XulMessageCenter;
+
 /**
  * Created by shmdu on 2017/8/28.
  */
@@ -18,6 +21,12 @@ public class App extends Application {
         super.onCreate();
         appInstance = this;
         _appMainHandler = new Handler(getMainLooper());
+
+        XulMessageCenter.buildMessage()
+                .setTag(CommonEntity.MESSAGE_ONE_SECOND)
+                .setInterval(1000)
+                .setRepeat(Integer.MAX_VALUE)
+                .post();
     }
 
     public static App getAppInstance() {

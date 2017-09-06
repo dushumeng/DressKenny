@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.fcdream.dress.kenny.ioc.AnnotateUtil;
+import com.fcdream.dress.kenny.message.XulMessageCenter;
 
 /**
  * Created by shmdu on 2017/8/30.
@@ -17,6 +18,8 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        XulMessageCenter.getDefault().register(this);
 
         setContentView(AnnotateUtil.getBindLayoutResId(this));
 
@@ -35,4 +38,10 @@ public abstract class BaseActivity extends Activity {
      * 初始化数据
      */
     protected abstract void initData();
+
+    @Override
+    protected void onDestroy() {
+        XulMessageCenter.getDefault().unregister(this);
+        super.onDestroy();
+    }
 }
