@@ -27,10 +27,40 @@ public class StarResult extends Entity {
         public String title;
         public int width;
         public int height;
+
+        @Override
+        public String toString() {
+            return "StarInfo{" +
+                    "id='" + id + '\'' +
+                    ", bigImg='" + bigImg + '\'' +
+                    ", img='" + img + '\'' +
+                    ", title='" + title + '\'' +
+                    ", width=" + width +
+                    ", height=" + height +
+                    '}';
+        }
     }
 
     public static class QueryInfo extends Entity {
         public int pageIndex;
         public int count;
+
+        @Override
+        public String toString() {
+            return "QueryInfo{" +
+                    "pageIndex=" + pageIndex +
+                    ", count=" + count +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "StarResult{" +
+                "result='" + result + '\'' +
+                ", msg='" + msg + '\'' +
+                ", queryInfo=" + queryInfo +
+                ", starInfoList=" + starInfoList +
+                '}';
     }
 }

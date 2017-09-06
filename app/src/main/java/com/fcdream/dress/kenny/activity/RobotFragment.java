@@ -66,7 +66,7 @@ public class RobotFragment extends BaseMainPageFragment {
     @Override
     public void onListenError(String errorInfo) {
         super.onListenError(errorInfo);
-        MessageUtils.showToast(getActivity(), "抱歉，我没听懂你在说什么！！！");
+
     }
 
     @Override

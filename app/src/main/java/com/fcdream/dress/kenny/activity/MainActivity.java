@@ -4,7 +4,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 import com.fcdream.dress.kenny.App;
 import com.fcdream.dress.kenny.BaseFragmentActivity;
@@ -16,6 +15,7 @@ import com.fcdream.dress.kenny.player.impl.XulAndroidPlayer;
 import com.fcdream.dress.kenny.speech.BaseSpeech;
 import com.fcdream.dress.kenny.speech.SpeechFactory;
 import com.fcdream.dress.kenny.utils.GeneralUtils;
+import com.fcdream.dress.kenny.utils.MessageUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -144,7 +144,7 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
             } else if (System.currentTimeMillis() - exitTime < DEFAULT_TIME_LEN) {
                 finish();
             } else {
-                Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+                MessageUtils.showToast(this, "再按一次退出");
                 exitTime = System.currentTimeMillis();
             }
             return true;

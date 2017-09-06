@@ -2,15 +2,10 @@ package com.fcdream.dress.kenny.activity;
 
 import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -26,10 +21,10 @@ import com.fcdream.dress.kenny.ioc.BindLayout;
 import com.fcdream.dress.kenny.ioc.BindView;
 import com.fcdream.dress.kenny.log.MyLog;
 import com.fcdream.dress.kenny.message.XulSubscriber;
+import com.fcdream.dress.kenny.retrofit.api.StartBus;
 import com.fcdream.dress.kenny.speech.BaseSpeechSynthesizer;
 import com.fcdream.dress.kenny.speech.SpeechFactory;
 import com.fcdream.dress.kenny.speech.SpeechSynthesizerError;
-import com.fcdream.dress.kenny.utils.SpaceItemDecoration;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
 import android.support.v7.widget.RecyclerView;
@@ -72,6 +67,9 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     @BindView(id = R.id.search_edit_text)
     private EditText searchEditText;
 
+    @BindView(id = R.id.listen_bg)
+    private ImageView listenBgImage;
+
     private boolean canSpeak = true;
 
     private boolean isAutoScroll = true;
@@ -84,6 +82,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     BaseSpeechSynthesizer speechSynthesizer;
 
     AnimationDrawable speakAnimation;
+    AnimationDrawable listenAnimation;
 
     private Handler handler = new Handler() {
         @Override
@@ -98,6 +97,8 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     @Override
     protected void initView(Activity activity, View sourceView) {
         speakAnimation = (AnimationDrawable) getActivity().getResources().getDrawable(R.drawable.anim_speak);
+        listenAnimation = (AnimationDrawable) listenBgImage.getDrawable();
+
         dealChangeSpeakStatus(STATE_SPEAK_NORMAL);
         searchEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -149,6 +150,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         } else {
             this.currentSearchKey = currentSearchKey;
         }
+        loadStarData();
         TestBus.testSearchDress(new MyCallback<List<DressItem>>() {
 
             @Override
@@ -175,47 +177,17 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         return BaseMainFragmentIface.TYPE_MAIN_LIST;
     }
 
-    public void autoScroll(int scrollPostion) {
-
-//        int firstCompletelyVisibleItemPosition = dressLayoutManager.findFirstCompletelyVisibleItemPosition();
-//        MyLog.i("dsminfo", firstCompletelyVisibleItemPosition + "-" + dressRecyclerView.getChildCount());
-//        int scrollToPosition = firstCompletelyVisibleItemPosition;
-//        if (firstCompletelyVisibleItemPosition != 0) {
-//            scrollToPosition = firstCompletelyVisibleItemPosition + 1;
-//        }
-//        if (scrollToPosition >= dressRecyclerView.getChildCount()) {
-//            return;
-//        }
-//        dressRecyclerView.smoothScrollToPosition(scrollToPosition);
-//        DressItemAdapter.ViewHolder childViewHolder = (DressItemAdapter.ViewHolder) dressRecyclerView.getChildViewHolder(dressRecyclerView.getChildAt(2));
-//        childViewHolder.bgImage.setVisibility(View.VISIBLE);
-//        if (scrollToPosition - 1 >= 0) {
-//            childViewHolder = (DressItemAdapter.ViewHolder) dressRecyclerView.getChildViewHolder(dressRecyclerView.getChildAt(scrollToPosition - 1));
-//            childViewHolder.bgImage.setVisibility(View.GONE);
-//        }
-//        App.postDelayToMainLooper(new Runnable() {
-//            @Override
-//            public void run() {
-//                autoScroll();
-//            }
-//        }, 5000);
-        int firstCompletelyVisibleItemPosition = dressLayoutManager.findFirstCompletelyVisibleItemPosition();
-        MyLog.i("dsminfo", firstCompletelyVisibleItemPosition + "-" + dressRecyclerView.getChildCount());
-        int scrollToPosition = firstCompletelyVisibleItemPosition;
-        if (firstCompletelyVisibleItemPosition != 0) {
-            scrollToPosition = firstCompletelyVisibleItemPosition + 1;
-        }
+    public void autoScroll(int scrollToPosition) {
         if (scrollToPosition >= dressRecyclerView.getChildCount()) {
             return;
         }
-        dressRecyclerView.smoothScrollToPosition(scrollToPosition);
-        DressItemAdapter.ViewHolder childViewHolder = (DressItemAdapter.ViewHolder) dressRecyclerView.getChildViewHolder(dressRecyclerView.getChildAt(2));
+        dressRecyclerView.mRecyclerView.smoothScrollToPosition(scrollToPosition);
+        DressItemAdapter.ViewHolder childViewHolder = (DressItemAdapter.ViewHolder) dressRecyclerView.mRecyclerView.getChildViewHolder(dressRecyclerView.getChildAt(2));
         childViewHolder.bgImage.setVisibility(View.VISIBLE);
         if (scrollToPosition - 1 >= 0) {
-            childViewHolder = (DressItemAdapter.ViewHolder) dressRecyclerView.getChildViewHolder(dressRecyclerView.getChildAt(scrollToPosition - 1));
+            childViewHolder = (DressItemAdapter.ViewHolder) dressRecyclerView.mRecyclerView.getChildViewHolder(dressRecyclerView.getChildAt(scrollToPosition - 1));
             childViewHolder.bgImage.setVisibility(View.GONE);
         }
-
     }
 
     @Override
@@ -272,6 +244,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         if (isFragmentIfaceValid()) {
             dealStopSpeak();
             ifaceReference.get().getSpeech().start();
+            changeListenState(true);
         }
     }
 
@@ -293,7 +266,14 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     }
 
     @Override
+    public void onListenError(String errorInfo) {
+        super.onListenError(errorInfo);
+        changeListenState(false);
+    }
+
+    @Override
     public void onListenEnd(String info) {
+        changeListenState(false);
         dealSearch(info);
     }
 
@@ -334,5 +314,19 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         isAutoScroll = true;
         int scrollPosition = dressLayoutManager.findFirstCompletelyVisibleItemPosition();
         autoScroll(scrollPosition);
+    }
+
+    private void changeListenState(boolean isListening) {
+        if (isListening) {
+            listenBgImage.setVisibility(View.VISIBLE);
+            listenAnimation.start();
+        } else {
+            listenBgImage.setVisibility(View.GONE);
+            listenAnimation.stop();
+        }
+    }
+
+    private void loadStarData() {
+        StartBus.queryStartList(currentSearchKey, 1, 20);
     }
 }

@@ -146,6 +146,9 @@ public class BaiduSpeech extends BaseSpeech implements RecognitionListener {
         }
         sb.append(":" + error);
         MyLog.i(TAG, sb.toString());
+        if (speechListener != null) {
+            speechListener.onListenError(sb.toString());
+        }
     }
 
     @Override

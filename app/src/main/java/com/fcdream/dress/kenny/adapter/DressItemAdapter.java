@@ -91,7 +91,9 @@ public class DressItemAdapter extends UltimateViewAdapter<RecyclerView.ViewHolde
                     .load(dressItem.img)
                     .resize((int) App.getAppInstance().getResources().getDimension(R.dimen.list_page_content_dress_item_width)
                             , (int) App.getAppInstance().getResources().getDimension(R.dimen.list_page_content_dress_item_height))
-                    .centerCrop().into(mViewHolder.dressImage);
+                    .centerCrop()
+                    .placeholder(R.drawable.default_dress_big)
+                    .into(mViewHolder.dressImage);
             mViewHolder.dressImage.setTag(position);
         }
     }

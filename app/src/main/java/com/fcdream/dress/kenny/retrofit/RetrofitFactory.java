@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -16,7 +17,7 @@ public class RetrofitFactory<T> {
 
     public static final String TYPE_BASE = "type_base";
 
-    private static final String BASE_URL = "http://47.94.0.142/cgi";
+    private static final String BASE_URL = "http://47.94.0.142/cgi/";
 
     private static final RetrofitFactory i = new RetrofitFactory();
 
@@ -25,6 +26,7 @@ public class RetrofitFactory<T> {
     private RetrofitFactory() {
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())//解析方法
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(BASE_URL)
                 .build();
         retrofitMap.put(TYPE_BASE, retrofit);
@@ -34,7 +36,7 @@ public class RetrofitFactory<T> {
         return i;
     }
 
-    public synchronized T create(Class<T> clazz) {
+    public synchronized Object create(Class<T> clazz) {
         return retrofitMap.get(TYPE_BASE).create(clazz);
     }
 }

@@ -6,6 +6,7 @@ import com.fcdream.dress.kenny.BaseFragment;
 import com.fcdream.dress.kenny.log.MyLog;
 import com.fcdream.dress.kenny.player.XulMediaPlayer;
 import com.fcdream.dress.kenny.speech.BaseSpeech;
+import com.fcdream.dress.kenny.utils.MessageUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -47,6 +48,7 @@ public abstract class BaseMainPageFragment extends BaseFragment implements BaseS
     @Override
     public void onListenError(String errorInfo) {
         MyLog.i(TAG, "---speech onListenError---" + errorInfo);
+        MessageUtils.showToast(getActivity(), "抱歉，我没听懂你在说什么！！！");
     }
 
     @Override
