@@ -73,17 +73,14 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     @Override
     protected void initView(Activity activity, View sourceView) {
-        dealChangeSpeakStatus(STATE_SPEAK_NORMAL);
-        searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    dealSearch(searchEditText.getText().toString());
-                }
-                return false;
-            }
-        });
         speakAnimation = (AnimationDrawable) getActivity().getResources().getDrawable(R.drawable.anim_speak);
+        dealChangeSpeakStatus(STATE_SPEAK_NORMAL);
+        searchEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                dealSearch(searchEditText.getText().toString());
+            }
+            return false;
+        });
         dressLayoutManager = new LinearLayoutManager(activity);
         dressLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         dressRecyclerView.setLayoutManager(dressLayoutManager);
