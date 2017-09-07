@@ -74,8 +74,10 @@ public abstract class MyRecyclerBus<K, V> {
         if (pageIndex == 0) {
             list.clear();
         }
-        list.addAll(dataList);
-        adapter.notifyDataSetChanged();
+        if (dataList != null && dataList.size() > 0) {
+            list.addAll(dataList);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     public void dealLoadDataError() {
