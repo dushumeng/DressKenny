@@ -10,18 +10,14 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.fcdream.dress.kenny.R;
-import com.fcdream.dress.kenny.adapter.DressItemAdapter;
 import com.fcdream.dress.kenny.adapter.OnItemClickListener;
 import com.fcdream.dress.kenny.bo.CommonEntity;
-import com.fcdream.dress.kenny.bo.DressItem;
-import com.fcdream.dress.kenny.bus.MyCallback;
-import com.fcdream.dress.kenny.bus.TestBus;
+import com.fcdream.dress.kenny.bo.StarResult;
 import com.fcdream.dress.kenny.helper.MyTime;
 import com.fcdream.dress.kenny.ioc.BindLayout;
 import com.fcdream.dress.kenny.ioc.BindView;
-import com.fcdream.dress.kenny.log.MyLog;
 import com.fcdream.dress.kenny.message.XulSubscriber;
-import com.fcdream.dress.kenny.retrofit.api.StartBus;
+import com.fcdream.dress.kenny.recycler.StarRecyclerBus;
 import com.fcdream.dress.kenny.speech.BaseSpeechSynthesizer;
 import com.fcdream.dress.kenny.speech.SpeechFactory;
 import com.fcdream.dress.kenny.speech.SpeechSynthesizerError;
@@ -31,8 +27,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
-
-import java.util.List;
 
 /**
  * Created by shmdu on 2017/8/31.
@@ -44,11 +38,6 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     private static final int AUTO_SCROLL_CHECK_TIME_LEN = 1 * 60 * 1000;
     private static final int MSG_AUTO_SCROLL = 111;
-
-    @BindView(id = R.id.dress_content_list_view)
-    private UltimateRecyclerView dressRecyclerView;
-
-    private DressItemAdapter dressItemAdapter;
 
     @BindView(id = R.id.shop_content_list_view)
     private RecyclerView shopRecyclerView;
@@ -76,6 +65,8 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     private long lastTouchTime = 0;
 
     private String currentSearchKey;
+
+    private StarRecyclerBus starRecyclerBus;
 
     LinearLayoutManager dressLayoutManager;
 
@@ -106,33 +97,14 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
             }
             return false;
         });
-        dressLayoutManager = new LinearLayoutManager(activity);
-        dressLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        dressRecyclerView.setLayoutManager(dressLayoutManager);
-        dressRecyclerView.setHasFixedSize(true);
-        dressRecyclerView.setEmptyView(R.layout.empty_view, UltimateRecyclerView.EMPTY_KEEP_HEADER);
-//        dressRecyclerView.addItemDecoration(new SpaceItemDecoration((int) getResources().getDimension(R.dimen.list_page_content_dress_content_item_margin)));
-//        dressRecyclerView.setRefreshing(true);
-        dressRecyclerView.reenableLoadmore();
-        dressRecyclerView.setLoadMoreView(getLayoutInflater().inflate(R.layout.custom_bottom_progressbar, null));
-//        dressRecyclerView.setDefaultSwipeToRefreshColorScheme(R.color.google_blue,
-//                R.color.google_green,
-//                R.color.google_red,
-//                R.color.google_yellow);
-//        dressRecyclerView.setParallaxHeader(getLayoutInflater().inflate(R.layout.custom_bottom_progressbar, null));
-        dressRecyclerView.setDefaultOnRefreshListener(() -> {
-            MyLog.i("dsminfo", "refresh!!!");
-        });
-        dressRecyclerView.setOnLoadMoreListener((itemsCount, maxLastVisiblePosition) -> {
-            MyLog.i("dsminfo", "load more!!!");
-        });
-        dressItemAdapter = new DressItemAdapter(getActivity(), this);
-        dressRecyclerView.setAdapter(dressItemAdapter);
+
+
+        starRecyclerBus = new StarRecyclerBus();
+        starRecyclerBus.init(getActivity()
+                , (UltimateRecyclerView) sourceView.findViewById(R.id.dress_content_list_view), this);
 
         speechSynthesizer = SpeechFactory.createSpeechSynthesizer(SpeechFactory.TYPE_BAIDU);
         speechSynthesizer.setSpeechSynthesizerListener(this);
-
-
     }
 
     @Override
@@ -144,26 +116,12 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         if (TextUtils.isEmpty(currentSearchKey)) {
             return;
         }
+        currentSearchKey = currentSearchKey.trim();
         searchEditText.setText(currentSearchKey);
-        if (TextUtils.equals(currentSearchKey, this.currentSearchKey)) {
-
-        } else {
-            this.currentSearchKey = currentSearchKey;
+        if (!TextUtils.equals(currentSearchKey, starRecyclerBus.currentSearchKey)) {
+            starRecyclerBus.currentSearchKey = currentSearchKey;
+            starRecyclerBus.loadData(currentSearchKey);
         }
-        loadStarData();
-        TestBus.testSearchDress(new MyCallback<List<DressItem>>() {
-
-            @Override
-            public void callback(boolean success, List<DressItem> list) {
-                if (list == null || list.size() == 0) {
-                    return;
-                }
-                dressItemAdapter.getDataList().clear();
-                dressItemAdapter.getDataList().addAll(list);
-                dressItemAdapter.notifyDataSetChanged();
-
-            }
-        }, "q", currentSearchKey);
     }
 
     public void dealHandleBack(View view) {
@@ -178,16 +136,16 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     }
 
     public void autoScroll(int scrollToPosition) {
-        if (scrollToPosition >= dressRecyclerView.getChildCount()) {
-            return;
-        }
-        dressRecyclerView.mRecyclerView.smoothScrollToPosition(scrollToPosition);
-        DressItemAdapter.ViewHolder childViewHolder = (DressItemAdapter.ViewHolder) dressRecyclerView.mRecyclerView.getChildViewHolder(dressRecyclerView.getChildAt(2));
-        childViewHolder.bgImage.setVisibility(View.VISIBLE);
-        if (scrollToPosition - 1 >= 0) {
-            childViewHolder = (DressItemAdapter.ViewHolder) dressRecyclerView.mRecyclerView.getChildViewHolder(dressRecyclerView.getChildAt(scrollToPosition - 1));
-            childViewHolder.bgImage.setVisibility(View.GONE);
-        }
+//        if (scrollToPosition >= starRecyclerBus.recyclerView.getChildCount()) {
+//            return;
+//        }
+//        starRecyclerBus.recyclerView.mRecyclerView.smoothScrollToPosition(scrollToPosition);
+//        DressItemAdapter.ViewHolder childViewHolder = (DressItemAdapter.ViewHolder) starRecyclerBus.recyclerView.mRecyclerView.getChildViewHolder(starRecyclerBus.recyclerView.getChildAt(2));
+//        childViewHolder.bgImage.setVisibility(View.VISIBLE);
+//        if (scrollToPosition - 1 >= 0) {
+//            childViewHolder = (DressItemAdapter.ViewHolder) starRecyclerBus.recyclerView.mRecyclerView.getChildViewHolder(starRecyclerBus.recyclerView.getChildAt(scrollToPosition - 1));
+//            childViewHolder.bgImage.setVisibility(View.GONE);
+//        }
     }
 
     @Override
@@ -227,8 +185,8 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     @Override
     public void onItemClick(View view, int position, Object object) {
-        if (canSpeak && object != null && object instanceof DressItem) {
-            dealStartSpeak(((DressItem) object).title);
+        if (canSpeak && object != null && object instanceof StarResult.StarInfo) {
+            dealStartSpeak(((StarResult.StarInfo) object).title);
         }
     }
 
@@ -324,9 +282,5 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
             listenBgImage.setVisibility(View.GONE);
             listenAnimation.stop();
         }
-    }
-
-    private void loadStarData() {
-        StartBus.queryStartList(currentSearchKey, 1, 20);
     }
 }

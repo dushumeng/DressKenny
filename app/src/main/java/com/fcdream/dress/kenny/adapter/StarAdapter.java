@@ -9,21 +9,15 @@ import android.widget.ImageView;
 
 import com.fcdream.dress.kenny.App;
 import com.fcdream.dress.kenny.R;
-import com.fcdream.dress.kenny.bo.DressItem;
+import com.fcdream.dress.kenny.bo.StarResult;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
-import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by shmdu on 2017/9/3.
  */
 
-public class DressItemAdapter extends UltimateViewAdapter<RecyclerView.ViewHolder> implements View.OnClickListener {
-
-    private List<DressItem> dataList = new ArrayList<>();
+public class StarAdapter extends MyUltimateViewAdapter<StarResult.StarInfo> implements View.OnClickListener {
 
     private Context context;
 
@@ -31,7 +25,7 @@ public class DressItemAdapter extends UltimateViewAdapter<RecyclerView.ViewHolde
 
     private int selectPosition;
 
-    public DressItemAdapter(Context context, OnItemClickListener listener) {
+    public StarAdapter(Context context, OnItemClickListener listener) {
         this.context = context;
         this.listener = listener;
     }
@@ -76,7 +70,7 @@ public class DressItemAdapter extends UltimateViewAdapter<RecyclerView.ViewHolde
     @Override
     public void onClick(View view) {
         int position = (int) view.getTag();
-        DressItem item = dataList.get(position);
+        StarResult.StarInfo item = dataList.get(position);
         if (listener != item) {
             listener.onItemClick(view, position, item);
         }
@@ -86,11 +80,10 @@ public class DressItemAdapter extends UltimateViewAdapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder) {
             ViewHolder mViewHolder = (ViewHolder) holder;
-            DressItem dressItem = dataList.get(position);
+            StarResult.StarInfo item = dataList.get(position);
             Picasso.with(App.getAppInstance())
-                    .load(dressItem.img)
-                    .resize((int) App.getAppInstance().getResources().getDimension(R.dimen.list_page_content_dress_item_width)
-                            , (int) App.getAppInstance().getResources().getDimension(R.dimen.list_page_content_dress_item_height))
+                    .load(item.img)
+                    .resize((int) App.getAppInstance().getResources().getDimension(R.dimen.list_page_content_dress_item_width), (int) App.getAppInstance().getResources().getDimension(R.dimen.list_page_content_dress_item_height))
                     .centerCrop()
                     .placeholder(R.drawable.default_dress_big)
                     .into(mViewHolder.dressImage);
@@ -108,9 +101,5 @@ public class DressItemAdapter extends UltimateViewAdapter<RecyclerView.ViewHolde
             dressImage.setOnClickListener(clickListener);
             bgImage = (ImageView) view.findViewById(R.id.dress_item_bg);
         }
-    }
-
-    public List<DressItem> getDataList() {
-        return dataList;
     }
 }

@@ -2,8 +2,11 @@ package com.fcdream.dress.kenny.activity;
 
 import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.Image;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,14 +35,29 @@ public class RobotFragment extends BaseMainPageFragment {
     @BindView(id = R.id.robot_mic, click = true, clickEvent = "onRobotMicClick")
     private ImageView robotMicImage;
 
+    @BindView(id = R.id.robot_mic_line)
+    private ImageView robotMicLineImage;
+
     private AnimationDrawable robotMouthAnim;
+
+    private Animation robotMicLineAnimation;
 
     private String vodTipPath = "android.resource://" + App.getAppInstance().getApplicationContext().getPackageName() + "/" + R.raw.robot_tip_voice;
 
+    private boolean firstSpeech = true;
+
     @Override
     protected void initView(Activity activity, View sourceView) {
-        robotMouthAnim = (AnimationDrawable) robotMouthImage.getDrawable();
+        robotMouthAnim = (AnimationDrawable) activity.getResources().getDrawable(R.drawable.anim_mouth);
         robotTipText.setEllipsize(null);
+
+        int y = (int) activity.getResources().getDimension(R.dimen.robot_mic_bg_height);
+        y = y * 3 / 4;
+        robotMicLineAnimation = new TranslateAnimation(0, 0, -y, y);
+        robotMicLineAnimation.setDuration(3000);
+        robotMicLineAnimation.setRepeatCount(Animation.INFINITE);
+        robotMicLineImage.setAnimation(robotMicLineAnimation);
+        robotMicLineAnimation.cancel();
     }
 
     @Override
@@ -66,20 +84,25 @@ public class RobotFragment extends BaseMainPageFragment {
     @Override
     public void onListenError(String errorInfo) {
         super.onListenError(errorInfo);
-
+        dealEndSpeech();
     }
 
     @Override
     public void onListenEnd(String info) {
         super.onListenEnd(info);
+        dealEndSpeech();
         if (isFragmentIfaceValid()) {
             ifaceReference.get().handleSpeech(info);
         }
-        dealEndSpeech();
     }
 
     private void dealStartTips() {
-        robotMouthAnim.start();
+        if (!firstSpeech) {
+            dealStartSpeech();
+            return;
+        }
+        firstSpeech = false;
+        dealSpeakAnimation(true);
         robotTipText.setEllipsize(TextUtils.TruncateAt.MARQUEE);
         if (isFragmentIfaceValid()) {
             XulMediaPlayer mediaPlayer = ifaceReference.get().getMediaPlayer();
@@ -90,20 +113,23 @@ public class RobotFragment extends BaseMainPageFragment {
     }
 
     private void dealEndTips() {
-        robotMouthAnim.stop();
+        dealSpeakAnimation(false);
         robotTipText.setEllipsize(null);
     }
 
     private void dealStartSpeech() {
+        dealEndTips();
         if (isFragmentIfaceValid()) {
             ifaceReference.get().getSpeech().start();
         }
+        robotMicLineAnimation.start();
     }
 
     private void dealEndSpeech() {
         if (isFragmentIfaceValid()) {
             ifaceReference.get().getSpeech().stop();
         }
+        robotMicLineAnimation.cancel();
     }
 
     @Override
@@ -119,5 +145,15 @@ public class RobotFragment extends BaseMainPageFragment {
             xmp.stop();
         }
         return true;
+    }
+
+    private void dealSpeakAnimation(boolean speak) {
+        if (speak) {
+            robotMouthImage.setImageDrawable(robotMouthAnim);
+            robotMouthAnim.start();
+        } else {
+            robotMouthImage.setImageResource(R.drawable.mouth1);
+            robotMouthAnim.stop();
+        }
     }
 }

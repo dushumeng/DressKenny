@@ -15,10 +15,10 @@ import retrofit2.http.Query;
  * date：2017/9/6
  * description：
  */
-public class StartBus {
+public class StarBus {
 
     public static Observable<StarResult> queryStartList(String searchKey, int pageIndex, int pageCount) {
-        return ((StartBus.Api) (RetrofitFactory.i().create(StartBus.Api.class)))
+        return ((StarBus.Api) (RetrofitFactory.i().create(StarBus.Api.class)))
                 .get(searchKey, pageIndex, pageCount)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

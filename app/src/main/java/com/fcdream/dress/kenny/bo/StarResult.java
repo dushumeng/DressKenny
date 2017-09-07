@@ -42,7 +42,10 @@ public class StarResult extends Entity {
     }
 
     public static class QueryInfo extends Entity {
+        @SerializedName("p")
         public int pageIndex;
+
+        @SerializedName("cnt")
         public int count;
 
         @Override

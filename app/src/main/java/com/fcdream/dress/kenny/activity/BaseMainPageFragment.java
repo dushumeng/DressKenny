@@ -105,10 +105,10 @@ public abstract class BaseMainPageFragment extends BaseFragment implements BaseS
     @Override
     public void onResume() {
         super.onResume();
-        if (ifaceReference != null && ifaceReference.get() != null) {
-            ifaceReference.get().getSpeech().setSpeechListener(this);
-            ifaceReference.get().getMediaPlayer().setEventListener(this);
-        }
+//        if (ifaceReference != null && ifaceReference.get() != null) {
+//            ifaceReference.get().getSpeech().setSpeechListener(this);
+//            ifaceReference.get().getMediaPlayer().setEventListener(this);
+//        }
     }
 
     @Override
@@ -121,7 +121,10 @@ public abstract class BaseMainPageFragment extends BaseFragment implements BaseS
     }
 
     public void onShow(Object object) {
-
+        if (ifaceReference != null && ifaceReference.get() != null) {
+            ifaceReference.get().getSpeech().setSpeechListener(this);
+            ifaceReference.get().getMediaPlayer().setEventListener(this);
+        }
     }
 
     public boolean handleTouchEvent(MotionEvent event) {
