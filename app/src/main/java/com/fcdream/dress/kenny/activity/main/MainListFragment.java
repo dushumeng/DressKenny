@@ -1,10 +1,9 @@
-package com.fcdream.dress.kenny.activity;
+package com.fcdream.dress.kenny.activity.main;
 
 import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.view.View;
 import com.fcdream.dress.kenny.R;
 import com.fcdream.dress.kenny.adapter.OnItemClickListener;
 import com.fcdream.dress.kenny.bo.CommonEntity;
-import com.fcdream.dress.kenny.bo.StarResult;
+import com.fcdream.dress.kenny.bo.api.StarResult;
 import com.fcdream.dress.kenny.helper.MyTime;
 import com.fcdream.dress.kenny.ioc.BindLayout;
 import com.fcdream.dress.kenny.ioc.BindView;
@@ -64,11 +63,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     private boolean isAutoScroll = true;
     private long lastTouchTime = 0;
 
-    private String currentSearchKey;
-
     private StarRecyclerBus starRecyclerBus;
-
-    LinearLayoutManager dressLayoutManager;
 
     BaseSpeechSynthesizer speechSynthesizer;
 
@@ -118,9 +113,9 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         }
         currentSearchKey = currentSearchKey.trim();
         searchEditText.setText(currentSearchKey);
-        if (!TextUtils.equals(currentSearchKey, starRecyclerBus.currentSearchKey)) {
-            starRecyclerBus.currentSearchKey = currentSearchKey;
-            starRecyclerBus.loadData(currentSearchKey);
+        if (!TextUtils.equals(currentSearchKey, starRecyclerBus.userData)) {
+            starRecyclerBus.userData = currentSearchKey;
+            starRecyclerBus.loadData();
         }
     }
 
@@ -136,6 +131,9 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     }
 
     public void autoScroll(int scrollToPosition) {
+        if (isHidden()) {
+            return;
+        }
 //        if (scrollToPosition >= starRecyclerBus.recyclerView.getChildCount()) {
 //            return;
 //        }
@@ -247,9 +245,23 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     @Override
     public void onShow(Object object) {
+        super.onShow(object);
         if (object != null && object instanceof String) {
             dealSearch((String) object);
         }
+        starRecyclerBus.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        starRecyclerBus.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        starRecyclerBus.onDestroy();
     }
 
     @Override
@@ -262,6 +274,9 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     @XulSubscriber(tag = CommonEntity.MESSAGE_ONE_SECOND)
     public void dealUpdate(Object obj) {
+        if (isHidden()) {
+            return;
+        }
         // TODO: 2017/9/6 检查当前是否需要自动滚动
         if (!isAutoScroll && MyTime.currentTimeMillis() - lastTouchTime > AUTO_SCROLL_CHECK_TIME_LEN) {
             startAutoScroll();
@@ -269,8 +284,11 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     }
 
     private void startAutoScroll() {
+        if (starRecyclerBus == null) {
+            return;
+        }
         isAutoScroll = true;
-        int scrollPosition = dressLayoutManager.findFirstCompletelyVisibleItemPosition();
+        int scrollPosition = starRecyclerBus.layoutManager.findFirstCompletelyVisibleItemPosition();
         autoScroll(scrollPosition);
     }
 

@@ -1,4 +1,4 @@
-package com.fcdream.dress.kenny.activity;
+package com.fcdream.dress.kenny.activity.main;
 
 import com.fcdream.dress.kenny.player.XulMediaPlayer;
 import com.fcdream.dress.kenny.speech.BaseSpeech;

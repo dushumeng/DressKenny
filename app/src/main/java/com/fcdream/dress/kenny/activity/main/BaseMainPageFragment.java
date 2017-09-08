@@ -1,4 +1,4 @@
-package com.fcdream.dress.kenny.activity;
+package com.fcdream.dress.kenny.activity.main;
 
 import android.view.MotionEvent;
 

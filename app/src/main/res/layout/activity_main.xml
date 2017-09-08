@@ -5,14 +5,14 @@
 
     <fragment
         android:id="@+id/layout_robot"
-        android:name="com.fcdream.dress.kenny.activity.RobotFragment"
+        android:name="com.fcdream.dress.kenny.activity.main.RobotFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
 
     <fragment
         android:id="@+id/layout_main_list"
-        android:name="com.fcdream.dress.kenny.activity.MainListFragment"
+        android:name="com.fcdream.dress.kenny.activity.main.MainListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </RelativeLayout>

@@ -1,29 +1,23 @@
 package com.fcdream.dress.kenny.recycler;
 
 import android.app.Activity;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.fcdream.dress.kenny.R;
 import com.fcdream.dress.kenny.adapter.OnItemClickListener;
 import com.fcdream.dress.kenny.adapter.StarAdapter;
-import com.fcdream.dress.kenny.bo.StarResult;
+import com.fcdream.dress.kenny.bo.api.StarResult;
 import com.fcdream.dress.kenny.retrofit.api.StarBus;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DefaultObserver;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by shmdu on 2017/9/7.
  */
 
-public class StarRecyclerBus extends MyRecyclerBus<LinearLayoutManager, String>
-        implements SwipeRefreshLayout.OnRefreshListener, UltimateRecyclerView.OnLoadMoreListener {
-
-    public String currentSearchKey;
+public class StarRecyclerBus extends MyRecyclerBus<LinearLayoutManager, String> {
 
     @Override
     public void init(Activity activity, UltimateRecyclerView view, OnItemClickListener onItemClickListener) {
@@ -45,34 +39,21 @@ public class StarRecyclerBus extends MyRecyclerBus<LinearLayoutManager, String>
 
     @Override
     protected void dealLoadData(int pageIndex, String obj) {
-        StarBus.queryStartList(obj, pageIndex + 1, pageNum)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DefaultObserver<StarResult>() {
-                    @Override
-                    public void onNext(@NonNull StarResult starResult) {
-                        dealLoadDataFinish(pageIndex, starResult.queryInfo.count, starResult.starInfoList);
-                    }
+        StarBus.getList(obj, pageIndex + 1, pageNum, new DefaultObserver<StarResult>() {
+            @Override
+            public void onNext(@NonNull StarResult starResult) {
+                dealLoadDataFinish(pageIndex, starResult.queryInfo.count, starResult.starInfoList);
+            }
 
-                    @Override
-                    public void onError(@NonNull Throwable throwable) {
-                        dealLoadDataError();
-                    }
+            @Override
+            public void onError(@NonNull Throwable throwable) {
+                dealLoadDataError();
+            }
 
-                    @Override
-                    public void onComplete() {
+            @Override
+            public void onComplete() {
 
-                    }
-                });
-    }
-
-    @Override
-    public void onRefresh() {
-        loadData(currentSearchKey);
-    }
-
-    @Override
-    public void loadMore(int itemsCount, int maxLastVisiblePosition) {
-        loadNext(currentSearchKey);
+            }
+        });
     }
 }

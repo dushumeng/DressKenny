@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.fcdream.dress.kenny.App;
 import com.fcdream.dress.kenny.R;
-import com.fcdream.dress.kenny.bo.StarResult;
+import com.fcdream.dress.kenny.bo.api.StarResult;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.squareup.picasso.Picasso;
 
@@ -31,40 +31,10 @@ public class StarAdapter extends MyUltimateViewAdapter<StarResult.StarInfo> impl
     }
 
     @Override
-    public RecyclerView.ViewHolder newFooterHolder(View view) {
-        return new UltimateRecyclerviewViewHolder<>(view);
-    }
-
-    @Override
-    public RecyclerView.ViewHolder newHeaderHolder(View view) {
-        return new UltimateRecyclerviewViewHolder<>(view);
-    }
-
-    @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.view_dress_info, parent, false);
         ViewHolder vh = new ViewHolder(view, this);
         return vh;
-    }
-
-    @Override
-    public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        return new UltimateRecyclerviewViewHolder(parent);
-    }
-
-    @Override
-    public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-    }
-
-    @Override
-    public int getAdapterItemCount() {
-        return dataList.size();
-    }
-
-    @Override
-    public long generateHeaderId(int position) {
-        return -1;
     }
 
     @Override

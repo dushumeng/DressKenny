@@ -1,8 +1,7 @@
-package com.fcdream.dress.kenny.activity;
+package com.fcdream.dress.kenny.activity.main;
 
 import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
-import android.media.Image;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
@@ -15,7 +14,6 @@ import com.fcdream.dress.kenny.R;
 import com.fcdream.dress.kenny.ioc.BindLayout;
 import com.fcdream.dress.kenny.ioc.BindView;
 import com.fcdream.dress.kenny.player.XulMediaPlayer;
-import com.fcdream.dress.kenny.utils.MessageUtils;
 
 /**
  * Created by shmdu on 2017/8/31.
