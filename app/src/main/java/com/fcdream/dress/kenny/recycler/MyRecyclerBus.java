@@ -77,9 +77,9 @@ public abstract class MyRecyclerBus<K, V> implements SwipeRefreshLayout.OnRefres
         this.pageCount = (allCount % pageNum == 0) ? (allCount / pageNum) : (allCount / pageNum + 1);
         if (footView != null) {
             if (this.pageIndex >= this.pageCount) {
-                footView.setVisibility(View.GONE);
+                recyclerView.disableLoadmore();
             } else {
-                footView.setVisibility(View.VISIBLE);
+                recyclerView.reenableLoadmore();
             }
         }
     }
@@ -133,4 +133,18 @@ public abstract class MyRecyclerBus<K, V> implements SwipeRefreshLayout.OnRefres
     public void loadMore(int itemsCount, int maxLastVisiblePosition) {
         loadNext();
     }
+
+    public int getDataListSize() {
+        return adapter == null ? 0 : adapter.getDataList().size();
+    }
+
+    public Object getData(int position) {
+        int dataSize = getDataListSize();
+        if (position >= dataSize) {
+            return null;
+        }
+        return adapter.getDataList().get(position);
+    }
+
+
 }

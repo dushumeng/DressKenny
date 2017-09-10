@@ -26,7 +26,7 @@ public class App extends Application {
                 .setTag(CommonEntity.MESSAGE_ONE_SECOND)
                 .setInterval(1000)
                 .setRepeat(Integer.MAX_VALUE)
-                .post();
+                .postSticky();
     }
 
     public static App getAppInstance() {

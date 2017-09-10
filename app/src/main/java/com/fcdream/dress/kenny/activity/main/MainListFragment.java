@@ -1,6 +1,7 @@
 package com.fcdream.dress.kenny.activity.main;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
 import android.os.Message;
@@ -8,13 +9,17 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.fcdream.dress.kenny.App;
 import com.fcdream.dress.kenny.R;
+import com.fcdream.dress.kenny.activity.GoodsActivity;
 import com.fcdream.dress.kenny.adapter.OnItemClickListener;
+import com.fcdream.dress.kenny.adapter.StarAdapter;
 import com.fcdream.dress.kenny.bo.CommonEntity;
 import com.fcdream.dress.kenny.bo.api.StarResult;
 import com.fcdream.dress.kenny.helper.MyTime;
 import com.fcdream.dress.kenny.ioc.BindLayout;
 import com.fcdream.dress.kenny.ioc.BindView;
+import com.fcdream.dress.kenny.log.MyLog;
 import com.fcdream.dress.kenny.message.XulSubscriber;
 import com.fcdream.dress.kenny.recycler.StarRecyclerBus;
 import com.fcdream.dress.kenny.speech.BaseSpeechSynthesizer;
@@ -24,6 +29,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -35,7 +41,7 @@ import android.widget.ImageView;
 public class MainListFragment extends BaseMainPageFragment implements BaseSpeechSynthesizer.SpeechSynthesizerListener
         , OnItemClickListener {
 
-    private static final int AUTO_SCROLL_CHECK_TIME_LEN = 1 * 60 * 1000;
+    private static final int AUTO_SCROLL_CHECK_TIME_LEN = 30 * 1000;
     private static final int MSG_AUTO_SCROLL = 111;
 
     @BindView(id = R.id.shop_content_list_view)
@@ -43,6 +49,9 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     @BindView(id = R.id.back, clickEvent = "dealHandleBack", click = true)
     private ImageView backImage;
+
+    @BindView(id = R.id.goods_title, clickEvent = "goGoodsPage", click = true)
+    private Button goodsImage;
 
     private ImageView robotImage;
 
@@ -60,7 +69,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     private boolean canSpeak = true;
 
-    private boolean isAutoScroll = true;
+    private boolean isAutoScroll = false;
     private long lastTouchTime = 0;
 
     private StarRecyclerBus starRecyclerBus;
@@ -130,20 +139,45 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         return BaseMainFragmentIface.TYPE_MAIN_LIST;
     }
 
+    private int currentSelectPosition = 0;
+
     public void autoScroll(int scrollToPosition) {
         if (isHidden()) {
             return;
         }
-//        if (scrollToPosition >= starRecyclerBus.recyclerView.getChildCount()) {
-//            return;
-//        }
-//        starRecyclerBus.recyclerView.mRecyclerView.smoothScrollToPosition(scrollToPosition);
-//        DressItemAdapter.ViewHolder childViewHolder = (DressItemAdapter.ViewHolder) starRecyclerBus.recyclerView.mRecyclerView.getChildViewHolder(starRecyclerBus.recyclerView.getChildAt(2));
-//        childViewHolder.bgImage.setVisibility(View.VISIBLE);
-//        if (scrollToPosition - 1 >= 0) {
-//            childViewHolder = (DressItemAdapter.ViewHolder) starRecyclerBus.recyclerView.mRecyclerView.getChildViewHolder(starRecyclerBus.recyclerView.getChildAt(scrollToPosition - 1));
-//            childViewHolder.bgImage.setVisibility(View.GONE);
-//        }
+        MyLog.i("dsminfo", "scrollToPosition:" + scrollToPosition + "---" + starRecyclerBus.getDataListSize());
+        if (scrollToPosition >= starRecyclerBus.getDataListSize()) {
+            isAutoScroll = false;
+            return;
+        }
+
+        int targetScrollToPosition = scrollToPosition + 1;
+        int targetSelectPosition = scrollToPosition;
+        if (targetSelectPosition > starRecyclerBus.getDataListSize() / 2) {
+            starRecyclerBus.loadNext();
+        }
+        currentSelectPosition = targetSelectPosition;
+
+        setStarSelectPosition(targetSelectPosition);
+        starRecyclerBus.recyclerView.mRecyclerView.smoothScrollToPosition(targetScrollToPosition);
+        StarAdapter.ViewHolder viewHolder = getViewHolder(targetSelectPosition);
+        if (viewHolder != null) {
+            viewHolder.bgImage.setVisibility(View.VISIBLE);
+        } else {
+            MyLog.i("dsminfo", "current null---" + targetScrollToPosition);
+        }
+        viewHolder = getViewHolder(targetSelectPosition - 1);
+        if (viewHolder != null) {
+            viewHolder.bgImage.setVisibility(View.GONE);
+        } else {
+            MyLog.i("dsminfo", "last null---" + (targetScrollToPosition - 1));
+        }
+        StarResult.StarInfo data = (StarResult.StarInfo) starRecyclerBus.getData(targetScrollToPosition);
+        if (canSpeak && data != null) {
+            dealStartSpeak(data.title);
+        } else {
+            scrollNextDelay(3 * 1000);
+        }
     }
 
     @Override
@@ -174,11 +208,12 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     @Override
     public void onSpeechFinish(String s) {
         dealChangeSpeakStatus(STATE_SPEAK_NORMAL);
+        scrollNextDelay(1000);
     }
 
     @Override
-    public void onError(String s, SpeechSynthesizerError speechError) {
-
+    public void onSpeechError(String s, SpeechSynthesizerError speechError) {
+        scrollNextDelay(1000);
     }
 
     @Override
@@ -186,6 +221,10 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         if (canSpeak && object != null && object instanceof StarResult.StarInfo) {
             dealStartSpeak(((StarResult.StarInfo) object).title);
         }
+    }
+
+    public void goGoodsPage(View view) {
+        startActivity(new Intent(getActivity(), GoodsActivity.class));
     }
 
     public void dealSpeakImageClick(View view) {
@@ -266,9 +305,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     @Override
     public boolean handleTouchEvent(MotionEvent event) {
-        lastTouchTime = MyTime.currentTimeMillis();
-        isAutoScroll = false;
-        handler.removeMessages(MSG_AUTO_SCROLL);
+        stopAutoScroll();
         return super.handleTouchEvent(event);
     }
 
@@ -284,7 +321,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     }
 
     private void startAutoScroll() {
-        if (starRecyclerBus == null) {
+        if (starRecyclerBus == null || starRecyclerBus.getDataListSize() == 0) {
             return;
         }
         isAutoScroll = true;
@@ -300,5 +337,40 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
             listenBgImage.setVisibility(View.GONE);
             listenAnimation.stop();
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        handler.removeCallbacksAndMessages(null);
+    }
+
+    private StarAdapter.ViewHolder getViewHolder(int position) {
+        StarAdapter.ViewHolder viewHolder = (StarAdapter.ViewHolder) starRecyclerBus.recyclerView.mRecyclerView.findViewHolderForAdapterPosition(position);
+        return viewHolder;
+    }
+
+    private void scrollNextDelay(int delay) {
+        if (!isAutoScroll) {
+            return;
+        }
+        Message message = Message.obtain();
+        message.what = MSG_AUTO_SCROLL;
+        message.obj = currentSelectPosition + 1;
+        handler.sendMessageDelayed(message, delay);
+    }
+
+    private void setStarSelectPosition(int position) {
+        if (starRecyclerBus == null) {
+            return;
+        }
+        ((StarAdapter) starRecyclerBus.adapter).setSelectPosition(position);
+    }
+
+    private void stopAutoScroll() {
+        lastTouchTime = MyTime.currentTimeMillis();
+        isAutoScroll = false;
+        setStarSelectPosition(-1);
+        handler.removeMessages(MSG_AUTO_SCROLL);
     }
 }

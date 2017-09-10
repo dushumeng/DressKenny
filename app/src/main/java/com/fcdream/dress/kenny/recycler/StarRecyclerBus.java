@@ -28,6 +28,7 @@ public class StarRecyclerBus extends MyRecyclerBus<LinearLayoutManager, String> 
         footView = activity.getLayoutInflater().inflate(R.layout.custom_bottom_progressbar, null);
 
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLoadMoreView(footView);
         recyclerView.setLoadMoreView(null);
         recyclerView.setHasFixedSize(true);
         recyclerView.setEmptyView(R.layout.empty_view, UltimateRecyclerView.EMPTY_KEEP_HEADER);

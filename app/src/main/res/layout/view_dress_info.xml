@@ -16,4 +16,11 @@
         android:layout_width="@dimen/list_page_content_dress_item_width"
         android:layout_height="@dimen/list_page_content_dress_item_height"
         android:layout_centerInParent="true" />
+
+    <TextView android:id="@+id/dress_num"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="#ff0000"
+        android:textSize="40sp" />
 </RelativeLayout>

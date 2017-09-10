@@ -11,7 +11,7 @@ public class MyLog {
     public static int level = Log.DEBUG;
 
     public static void i(String tag, String log) {
-        Log.i(tag, log);
+        Log.e(tag, log);
     }
 
     public static void d(String tag, String log) {

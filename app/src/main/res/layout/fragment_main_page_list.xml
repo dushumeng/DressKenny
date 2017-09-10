@@ -13,13 +13,24 @@
         android:layout_marginTop="@dimen/list_page_back_margin_top"
         android:src="@drawable/list_back" />
 
+    <Button
+        android:id="@+id/goods_title"
+        android:layout_width="@dimen/list_page_content_goods_title_width"
+        android:layout_height="@dimen/list_page_content_goods_title_height"
+        android:layout_marginLeft="@dimen/list_page_content_goods_title_margin_left"
+        android:layout_marginTop="@dimen/list_page_content_goods_title_margin_top"
+        android:layout_toRightOf="@+id/back"
+        android:text="本店全部商品"
+        android:textColor="#00c5b5"
+        android:textSize="12sp" android:background="@drawable/list_page_goods_btn_bg"/>
+
     <RelativeLayout
         android:id="@+id/search_layout"
         android:layout_width="@dimen/list_page_search_layout_width"
         android:layout_height="@dimen/list_page_search_layout_height"
         android:layout_marginLeft="@dimen/list_page_search_layout_margin_left"
         android:layout_marginTop="@dimen/list_page_search_layout_margin_top"
-        android:layout_toRightOf="@+id/back"
+        android:layout_toRightOf="@+id/goods_title"
         android:background="@drawable/list_page_search_layout_bg">
 
         <ImageView
@@ -125,8 +136,8 @@
         android:id="@+id/listen_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#99000000"
         android:scaleType="center"
         android:src="@drawable/anim_listen"
-        android:visibility="gone"
-        android:background="#99000000"/>
+        android:visibility="gone" />
 </RelativeLayout>

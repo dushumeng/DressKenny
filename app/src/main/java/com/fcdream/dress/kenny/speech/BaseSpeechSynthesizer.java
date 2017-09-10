@@ -44,7 +44,7 @@ public abstract class BaseSpeechSynthesizer {
 
         void onSpeechFinish(String s);
 
-        void onError(String s, SpeechSynthesizerError speechError);
+        void onSpeechError(String s, SpeechSynthesizerError speechError);
     }
 
 }

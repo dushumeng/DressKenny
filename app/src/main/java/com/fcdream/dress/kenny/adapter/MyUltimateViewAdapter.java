@@ -1,5 +1,6 @@
 package com.fcdream.dress.kenny.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,12 @@ import java.util.List;
 
 public abstract class MyUltimateViewAdapter<T> extends UltimateViewAdapter<RecyclerView.ViewHolder>
         implements View.OnClickListener {
+
+    final protected Context context;
+
+    public MyUltimateViewAdapter(Context context) {
+        this.context = context;
+    }
 
     final protected List<T> dataList = new ArrayList<>();
 

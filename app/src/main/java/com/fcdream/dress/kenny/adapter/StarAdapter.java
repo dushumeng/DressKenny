@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.fcdream.dress.kenny.App;
 import com.fcdream.dress.kenny.R;
@@ -19,14 +20,12 @@ import com.squareup.picasso.Picasso;
 
 public class StarAdapter extends MyUltimateViewAdapter<StarResult.StarInfo> implements View.OnClickListener {
 
-    private Context context;
-
     private OnItemClickListener listener;
 
-    private int selectPosition;
+    private int selectPosition = -1;
 
     public StarAdapter(Context context, OnItemClickListener listener) {
-        this.context = context;
+        super(context);
         this.listener = listener;
     }
 
@@ -58,18 +57,30 @@ public class StarAdapter extends MyUltimateViewAdapter<StarResult.StarInfo> impl
                     .placeholder(R.drawable.default_dress_big)
                     .into(mViewHolder.dressImage);
             mViewHolder.dressImage.setTag(position);
+            //mViewHolder.num.setText(position + "");
+            if (selectPosition == position) {
+                mViewHolder.bgImage.setVisibility(View.VISIBLE);
+            } else {
+                mViewHolder.bgImage.setVisibility(View.GONE);
+            }
         }
     }
 
     public static class ViewHolder extends UltimateRecyclerviewViewHolder {
-        public ImageView dressImage;
-        public ImageView bgImage;
+        final public ImageView dressImage;
+        final public ImageView bgImage;
+        final public TextView num;
 
         public ViewHolder(View view, View.OnClickListener clickListener) {
             super(view);
             dressImage = (ImageView) view.findViewById(R.id.dress_item);
             dressImage.setOnClickListener(clickListener);
             bgImage = (ImageView) view.findViewById(R.id.dress_item_bg);
+            num = (TextView) view.findViewById(R.id.dress_num);
         }
+    }
+
+    public void setSelectPosition(int selectPosition) {
+        this.selectPosition = selectPosition;
     }
 }

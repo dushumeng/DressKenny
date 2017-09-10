@@ -153,7 +153,7 @@ public class BaiduSpeechSynthesizer extends BaseSpeechSynthesizer implements Spe
     @Override
     public void onError(String s, SpeechError speechError) {
         if (listener != null) {
-            App.postToMainLooper(() -> listener.onError(s, new SpeechSynthesizerError(speechError.code, speechError.description)));
+            App.postToMainLooper(() -> listener.onSpeechError(s, new SpeechSynthesizerError(speechError.code, speechError.description)));
         }
         MyLog.i(TAG, "onError:" + s + "," + speechError);
     }
