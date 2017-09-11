@@ -10,6 +10,11 @@ import com.fcdream.dress.kenny.BaseActivity;
  */
 public class ShopActivity extends BaseActivity {
     @Override
+    protected void initParam() {
+
+    }
+
+    @Override
     protected void initView() {
 
     }

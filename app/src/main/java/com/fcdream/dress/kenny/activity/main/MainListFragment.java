@@ -172,7 +172,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         } else {
             MyLog.i("dsminfo", "last null---" + (targetScrollToPosition - 1));
         }
-        StarResult.StarInfo data = (StarResult.StarInfo) starRecyclerBus.getData(targetScrollToPosition);
+        StarResult.StarInfo data = (StarResult.StarInfo) starRecyclerBus.getData(targetSelectPosition);
         if (canSpeak && data != null) {
             dealStartSpeak(data.title);
         } else {

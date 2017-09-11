@@ -42,6 +42,11 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
     private BaseMainPageFragment showFragment;
 
     @Override
+    protected void initParam() {
+
+    }
+
+    @Override
     protected void initView() {
         mediaPlayer = new XulAndroidPlayer(true);
         mediaPlayer.init(this);
@@ -55,8 +60,8 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
         fragmentMap.put(robotFragment.getFragmentType(), robotFragment);
         fragmentMap.put(mainListFragment.getFragmentType(), mainListFragment);
         //测试
-//        show(TYPE_MAIN_LIST, "白色大衣");
-        show(TYPE_ROBOT, null);
+        show(TYPE_MAIN_LIST, "白色大衣");
+//        show(TYPE_ROBOT, null);
     }
 
     @Override

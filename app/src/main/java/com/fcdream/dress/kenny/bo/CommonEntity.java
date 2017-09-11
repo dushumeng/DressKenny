@@ -8,6 +8,10 @@ package com.fcdream.dress.kenny.bo;
  */
 public class CommonEntity {
 
+    public static final String PARAM_ID = "param_id";
+    public static final String PARAM_NAME = "param_name";
+    public static final String PARAM_IMG = "param_img";
+
     //------message------
     public static final int MESSAGE_BASE = 10000;
     public static final int MESSAGE_ONE_SECOND = MESSAGE_BASE + 1;

@@ -28,6 +28,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
 
         AnnotateUtil.initBindView(this);
 
+        initParam();
         initView();
         initData();
     }
@@ -35,6 +36,8 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
     protected boolean isSupportActionBar() {
         return false;
     }
+
+    protected abstract void initParam();
 
     /**
      * 初始化视图

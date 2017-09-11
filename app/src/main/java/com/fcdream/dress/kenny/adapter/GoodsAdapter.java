@@ -21,8 +21,11 @@ import com.squareup.picasso.Picasso;
  */
 public class GoodsAdapter extends MyUltimateViewAdapter<GoodsResult.GoodsInfo> {
 
+    private OnItemClickListener listener;
+
     public GoodsAdapter(Context context, OnItemClickListener listener) {
         super(context);
+        this.listener = listener;
     }
 
     @Override
@@ -36,13 +39,12 @@ public class GoodsAdapter extends MyUltimateViewAdapter<GoodsResult.GoodsInfo> {
                     .centerCrop()
                     .placeholder(R.drawable.default_dress_big)
                     .into(viewHolder.dressImage);
+            viewHolder.dressImage.setTag(i);
         }
-
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
-
         View view = LayoutInflater.from(context).inflate(R.layout.view_goods_info, parent, false);
         ViewHolder vh = new ViewHolder(view, this);
         return vh;
@@ -56,5 +58,15 @@ public class GoodsAdapter extends MyUltimateViewAdapter<GoodsResult.GoodsInfo> {
             dressImage = (ImageView) view.findViewById(R.id.dress_item);
             dressImage.setOnClickListener(clickListener);
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (listener != null) {
+            int position = (int) view.getTag();
+            listener.onItemClick(view, position, dataList.get(position));
+            return;
+        }
+        super.onClick(view);
     }
 }

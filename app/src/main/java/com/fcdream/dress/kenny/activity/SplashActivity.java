@@ -20,8 +20,12 @@ import java.util.concurrent.Executors;
 @BindLayout(layout = R.layout.activity_splash)
 public class SplashActivity extends BaseActivity {
 
-
     private CountDownLatch latch = new CountDownLatch(2);
+
+    @Override
+    protected void initParam() {
+
+    }
 
     @Override
     protected void initView() {

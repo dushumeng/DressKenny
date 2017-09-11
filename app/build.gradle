@@ -80,4 +80,6 @@ dependencies {
     compile 'com.android.support:design:25.4.0'
     compile 'com.marshalchen.ultimaterecyclerview:library:0.7.3'
     compile files('libs/com.baidu.tts_2.3.0.jar')
+
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
