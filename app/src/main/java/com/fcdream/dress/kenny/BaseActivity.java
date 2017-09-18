@@ -33,9 +33,12 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
         AnnotateUtil.initBindView(this);
 
+        initParam();
         initView();
         initData();
     }
+
+    protected abstract void initParam();
 
     /**
      * 初始化视图

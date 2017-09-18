@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_main_list">
+
+    <RelativeLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_page_back_height"
+        android:layout_marginLeft="@dimen/list_page_back_margin_left"
+        android:layout_marginTop="@dimen/list_page_back_margin_top">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="@dimen/list_page_back_width"
+            android:layout_height="@dimen/list_page_back_height"
+            android:src="@drawable/list_back"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/title_x"
+            android:layout_toRightOf="@+id/back"
+            android:gravity="center_vertical"
+            android:text="本店商品"
+            android:textColor="#ffffffff"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/list_page_content_layout_width"
+        android:layout_height="@dimen/list_page_content_layout_height"
+        android:layout_marginLeft="@dimen/list_page_content_layout_x"
+        android:layout_marginTop="@dimen/list_page_content_layout_y">
+
+        <ImageView
+            android:id="@+id/goods_img"
+            android:layout_width="@dimen/goods_info_image_width"
+            android:layout_height="@dimen/goods_info_image_height"
+            android:src="@drawable/default_dress_big"/>
+
+        <ImageView
+            android:id="@+id/content_line"
+            android:layout_width="@dimen/list_page_content_line_width"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/list_page_content_line_margin"
+            android:layout_toRightOf="@+id/goods_img"
+            android:src="@drawable/list_page_content_line"/>
+
+        <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+            android:id="@+id/dress_content_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_marginLeft="@dimen/list_page_content_line_margin"
+            android:layout_toRightOf="@+id/content_line"
+            android:nestedScrollingEnabled="false"
+            android:scrollbars="none"
+            app:recyclerviewScrollbars="horizontal"/>
+    </RelativeLayout>
+
+</RelativeLayout>

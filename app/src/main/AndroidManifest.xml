@@ -73,6 +73,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.fcdream.dress.kenny.activity.GoodsInfoActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name="com.fcdream.dress.kenny.activity.SplashActivity"

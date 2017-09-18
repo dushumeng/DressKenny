@@ -104,7 +104,7 @@
             android:id="@+id/content_line"
             android:layout_width="@dimen/list_page_content_line_width"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/list_page_content_line_x"
+            android:layout_marginLeft="@dimen/list_page_content_line_margin"
             android:src="@drawable/list_page_content_line"
             android:visibility="gone" />
 
