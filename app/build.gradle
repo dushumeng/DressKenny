@@ -24,23 +24,9 @@ android {
         }
     }
 
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            //命名规则，这个就是主要演示一下groovy闭包操作的
-            //前面我们知道多渠道打包还是用python来完成速度是最快的
-            output.outputFile = new File(
-                    output.outputFile.parent,
-                    "custom-${variant.buildType.name}-${variant.versionName}.apk".toLowerCase())
-            //把unaligned apk删除掉 看着碍眼
-            File unaligned=output.packageApplication.outputFile
-            unaligned.delete()
-
-        }
-    }
-
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             shrinkResources true
             //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.fcdream

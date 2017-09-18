@@ -98,6 +98,9 @@ public abstract class MyRecyclerBus<K, V> implements SwipeRefreshLayout.OnRefres
         if (dataList != null && dataList.size() > 0) {
             list.addAll(dataList);
             adapter.notifyDataSetChanged();
+            if (pageIndex == 0) {
+                recyclerView.mRecyclerView.smoothScrollToPosition(0);
+            }
         }
     }
 

@@ -64,7 +64,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     @BindView(id = R.id.search_edit_text)
     private EditText searchEditText;
 
-    @BindView(id = R.id.listen_bg)
+    @BindView(id = R.id.listen_bg, clickEvent = "dealListenBgImageClick", click = true)
     private ImageView listenBgImage;
 
     private boolean canSpeak = true;
@@ -236,11 +236,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     }
 
     public void dealMicImageClick(View view) {
-        if (isFragmentIfaceValid()) {
-            dealStopSpeak();
-            ifaceReference.get().getSpeech().start();
-            changeListenState(true);
-        }
+        dealStartSpeech();
     }
 
     private static String STATE_SPEAKING = "state_speaking";
@@ -295,6 +291,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     public void onStop() {
         super.onStop();
         starRecyclerBus.onStop();
+        dealStopSpeak();
     }
 
     @Override
@@ -373,4 +370,29 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         setStarSelectPosition(-1);
         handler.removeMessages(MSG_AUTO_SCROLL);
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    public void dealListenBgImageClick(View view) {
+        dealStopSpeech();
+    }
+
+    protected void dealStopSpeech() {
+        changeListenState(false);
+        if (isFragmentIfaceValid()) {
+            ifaceReference.get().getSpeech().stop();
+        }
+    }
+
+    protected void dealStartSpeech() {
+        dealStopSpeak();
+        changeListenState(true);
+        if (isFragmentIfaceValid()) {
+            ifaceReference.get().getSpeech().start();
+        }
+    }
+
 }
