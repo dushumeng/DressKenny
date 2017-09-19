@@ -21,6 +21,8 @@ public abstract class BaseMainPageFragment extends BaseFragment implements BaseS
 
     protected WeakReference<BaseMainFragmentIface> ifaceReference;
 
+    protected Object userdata;
+
     public abstract String getFragmentType();
 
     public void setFragmentIface(BaseMainFragmentIface iface) {
@@ -120,14 +122,24 @@ public abstract class BaseMainPageFragment extends BaseFragment implements BaseS
         }
     }
 
-    public void onShow(Object object) {
-        if (ifaceReference != null && ifaceReference.get() != null) {
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden && isFragmentIfaceValid()) {
             ifaceReference.get().getSpeech().setSpeechListener(this);
             ifaceReference.get().getMediaPlayer().setEventListener(this);
+        } else if (!hidden && isFragmentIfaceValid()) {
+            ifaceReference.get().getSpeech().stop();
+            ifaceReference.get().getMediaPlayer().stop();
         }
+        MyLog.d(TAG, "onHiddenChanged:" + hidden);
     }
 
     public boolean handleTouchEvent(MotionEvent event) {
         return false;
+    }
+
+    public void setUserdata(Object userdata) {
+        this.userdata = userdata;
     }
 }

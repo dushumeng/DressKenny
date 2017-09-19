@@ -52,6 +52,18 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
         mediaPlayer.init(this);
         baseSpeech = SpeechFactory.createSpeech(SpeechFactory.TYPE_BAIDU);
         baseSpeech.init(this);
+        initFragment();
+        //测试
+        show(TYPE_MAIN_LIST, "红色大衣");
+//        show(TYPE_ROBOT, null);
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    private void initFragment() {
         RobotFragment robotFragment = (RobotFragment) getSupportFragmentManager().findFragmentById(R.id.layout_robot);
         robotFragment.setFragmentIface(this);
         MainListFragment mainListFragment = (MainListFragment) getSupportFragmentManager().findFragmentById(R.id.layout_main_list);
@@ -59,14 +71,13 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
 
         fragmentMap.put(robotFragment.getFragmentType(), robotFragment);
         fragmentMap.put(mainListFragment.getFragmentType(), mainListFragment);
-        //测试
-        show(TYPE_MAIN_LIST, "白色大衣");
-//        show(TYPE_ROBOT, null);
-    }
 
-    @Override
-    protected void initData() {
-
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        for (String key : fragmentMap.keySet()) {
+            BaseMainPageFragment baseFragment = fragmentMap.get(key);
+            transaction.hide(baseFragment);
+        }
+        transaction.commit();
     }
 
     private void show(String type, Object param) {
@@ -80,10 +91,8 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
                 transaction.hide(baseFragment);
             }
         }
+        showFragment.setUserdata(param);
         transaction.commit();
-        if (showFragment != null) {
-            showFragment.onShow(param);
-        }
     }
 
     @Override
@@ -163,12 +172,12 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (showFragment != null && showFragment.handleTouchEvent(event)) {
-                return true;
+            if (showFragment != null) {
+                showFragment.handleTouchEvent(event);
             }
         }
-        return super.onTouchEvent(event);
+        return super.dispatchTouchEvent(event);
     }
 }

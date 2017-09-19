@@ -15,7 +15,7 @@ public class MyLog {
     }
 
     public static void d(String tag, String log) {
-        Log.d(tag, log);
+        Log.e(tag, log);
     }
 
     public static void w(String tag, String log) {

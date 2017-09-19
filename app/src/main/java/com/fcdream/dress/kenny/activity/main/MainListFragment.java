@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.fcdream.dress.kenny.App;
 import com.fcdream.dress.kenny.R;
 import com.fcdream.dress.kenny.activity.GoodsActivity;
 import com.fcdream.dress.kenny.adapter.OnItemClickListener;
@@ -32,6 +31,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 /**
  * Created by shmdu on 2017/8/31.
@@ -64,8 +64,11 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     @BindView(id = R.id.search_edit_text)
     private EditText searchEditText;
 
-    @BindView(id = R.id.listen_bg, clickEvent = "dealListenBgImageClick", click = true)
-    private ImageView listenBgImage;
+    @BindView(id = R.id.listen_bg, clickEvent = "dealListenBgLayoutClick", click = true)
+    private RelativeLayout listenBgLayout;
+
+    @BindView(id = R.id.listen_mic, clickEvent = "dealListenMicImageClick", click = true)
+    private ImageView listenMicImage;
 
     private boolean canSpeak = true;
 
@@ -92,7 +95,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     @Override
     protected void initView(Activity activity, View sourceView) {
         speakAnimation = (AnimationDrawable) getActivity().getResources().getDrawable(R.drawable.anim_speak);
-        listenAnimation = (AnimationDrawable) listenBgImage.getDrawable();
+        listenAnimation = (AnimationDrawable) listenMicImage.getDrawable();
 
         dealChangeSpeakStatus(STATE_SPEAK_NORMAL);
         searchEditText.setOnEditorActionListener((v, actionId, event) -> {
@@ -123,6 +126,8 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         currentSearchKey = currentSearchKey.trim();
         searchEditText.setText(currentSearchKey);
         if (!TextUtils.equals(currentSearchKey, starRecyclerBus.userData)) {
+            dealStopSpeak();
+            dealStopSpeech();
             starRecyclerBus.userData = currentSearchKey;
             starRecyclerBus.loadData();
         }
@@ -279,15 +284,6 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     }
 
     @Override
-    public void onShow(Object object) {
-        super.onShow(object);
-        if (object != null && object instanceof String) {
-            dealSearch((String) object);
-        }
-        starRecyclerBus.onStart();
-    }
-
-    @Override
     public void onStop() {
         super.onStop();
         starRecyclerBus.onStop();
@@ -328,10 +324,10 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     private void changeListenState(boolean isListening) {
         if (isListening) {
-            listenBgImage.setVisibility(View.VISIBLE);
+            listenBgLayout.setVisibility(View.VISIBLE);
             listenAnimation.start();
         } else {
-            listenBgImage.setVisibility(View.GONE);
+            listenBgLayout.setVisibility(View.GONE);
             listenAnimation.stop();
         }
     }
@@ -376,8 +372,14 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         super.onPause();
     }
 
-    public void dealListenBgImageClick(View view) {
+    public void dealListenBgLayoutClick(View view) {
         dealStopSpeech();
+        changeListenState(false);
+    }
+
+    public void dealListenMicImageClick(View view) {
+        dealStopSpeech();
+        dealStartSpeech();
     }
 
     protected void dealStopSpeech() {
@@ -395,4 +397,19 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         }
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            if (speechSynthesizer != null) {
+                dealStopSpeak();
+                dealStopSpeech();
+            }
+        } else {
+            if (userdata != null && userdata instanceof String) {
+                dealSearch((String) userdata);
+            }
+            starRecyclerBus.onStart();
+        }
+    }
 }
