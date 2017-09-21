@@ -76,7 +76,7 @@ public abstract class MyRecyclerBus<K, V> implements SwipeRefreshLayout.OnRefres
         this.allCount = allCount;
         this.pageCount = (allCount % pageNum == 0) ? (allCount / pageNum) : (allCount / pageNum + 1);
         if (footView != null) {
-            if (this.pageIndex >= this.pageCount) {
+            if (this.pageIndex + 1 >= this.pageCount) {
                 recyclerView.disableLoadmore();
             } else {
                 recyclerView.reenableLoadmore();
@@ -148,6 +148,4 @@ public abstract class MyRecyclerBus<K, V> implements SwipeRefreshLayout.OnRefres
         }
         return adapter.getDataList().get(position);
     }
-
-
 }

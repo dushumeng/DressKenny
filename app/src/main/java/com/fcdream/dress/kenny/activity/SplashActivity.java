@@ -1,8 +1,11 @@
 package com.fcdream.dress.kenny.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.baidu.mobstat.StatService;
 import com.fcdream.dress.kenny.App;
 import com.fcdream.dress.kenny.BaseActivity;
 import com.fcdream.dress.kenny.R;
@@ -21,6 +24,16 @@ import java.util.concurrent.Executors;
 public class SplashActivity extends BaseActivity {
 
     private CountDownLatch latch = new CountDownLatch(2);
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        App appInstance = App.getAppInstance();
+
+        StatService.start(appInstance);
+        StatService.setOn(appInstance, StatService.EXCEPTION_LOG);
+    }
 
     @Override
     protected void initParam() {

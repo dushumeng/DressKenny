@@ -70,6 +70,11 @@ public class RobotFragment extends BaseMainPageFragment {
         dealEndSpeech();
     }
 
+    @Override
+    public String getPageName() {
+        return "page_main_robot";
+    }
+
     public void onRobotMicClick(View view) {
         dealStartTips();
     }

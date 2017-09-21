@@ -68,4 +68,6 @@ dependencies {
     compile files('libs/com.baidu.tts_2.3.0.jar')
 
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.baidu.mobstat:mtj-sdk:latest.integration'
+
 }

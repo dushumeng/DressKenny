@@ -34,6 +34,11 @@
         <meta-data
             android:name="com.baidu.speech.SECRET_KEY"
             android:value="whf5Tz7ELQ2GupuLj2o3ZGTkoOogIRIi" />
+
+        <meta-data
+            android:name="BaiduMobAd_STAT_ID"
+            android:value="7c68076bd0" />
+
         <service
             android:name="com.baidu.speech.VoiceRecognitionService"
             android:exported="false"></service>

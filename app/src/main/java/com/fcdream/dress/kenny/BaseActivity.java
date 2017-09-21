@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 
+import com.baidu.mobstat.StatService;
 import com.fcdream.dress.kenny.ioc.AnnotateUtil;
 import com.fcdream.dress.kenny.message.XulMessageCenter;
 
@@ -63,5 +64,17 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         AnnotateUtil.invokeMehode(v, this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

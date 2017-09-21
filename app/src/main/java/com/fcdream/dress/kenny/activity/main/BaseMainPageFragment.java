@@ -2,6 +2,8 @@ package com.fcdream.dress.kenny.activity.main;
 
 import android.view.MotionEvent;
 
+import com.baidu.mobstat.StatService;
+import com.fcdream.dress.kenny.App;
 import com.fcdream.dress.kenny.BaseFragment;
 import com.fcdream.dress.kenny.log.MyLog;
 import com.fcdream.dress.kenny.player.XulMediaPlayer;
@@ -107,10 +109,6 @@ public abstract class BaseMainPageFragment extends BaseFragment implements BaseS
     @Override
     public void onResume() {
         super.onResume();
-//        if (ifaceReference != null && ifaceReference.get() != null) {
-//            ifaceReference.get().getSpeech().setSpeechListener(this);
-//            ifaceReference.get().getMediaPlayer().setEventListener(this);
-//        }
     }
 
     @Override
@@ -125,12 +123,20 @@ public abstract class BaseMainPageFragment extends BaseFragment implements BaseS
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+
+        App appInstance = App.getAppInstance();
+        if (hidden) {
+            StatService.onPageEnd(appInstance, getPageName());
+        } else {
+            StatService.onPageStart(appInstance, getPageName());
+        }
+
         if (hidden && isFragmentIfaceValid()) {
-            ifaceReference.get().getSpeech().setSpeechListener(this);
-            ifaceReference.get().getMediaPlayer().setEventListener(this);
-        } else if (!hidden && isFragmentIfaceValid()) {
             ifaceReference.get().getSpeech().stop();
             ifaceReference.get().getMediaPlayer().stop();
+        } else if (!hidden && isFragmentIfaceValid()) {
+            ifaceReference.get().getSpeech().setSpeechListener(this);
+            ifaceReference.get().getMediaPlayer().setEventListener(this);
         }
         MyLog.d(TAG, "onHiddenChanged:" + hidden);
     }
@@ -142,4 +148,6 @@ public abstract class BaseMainPageFragment extends BaseFragment implements BaseS
     public void setUserdata(Object userdata) {
         this.userdata = userdata;
     }
+
+    abstract public String getPageName();
 }

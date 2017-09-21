@@ -144,10 +144,13 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         return BaseMainFragmentIface.TYPE_MAIN_LIST;
     }
 
-    private int currentSelectPosition = 0;
+    private int currentSelectPosition = -1;
 
     public void autoScroll(int scrollToPosition) {
         if (isHidden()) {
+            return;
+        }
+        if (scrollToPosition == currentSelectPosition) {
             return;
         }
         MyLog.i("dsminfo", "scrollToPosition:" + scrollToPosition + "---" + starRecyclerBus.getDataListSize());
@@ -302,6 +305,11 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         return super.handleTouchEvent(event);
     }
 
+    @Override
+    public String getPageName() {
+        return "page_main_star_list";
+    }
+
     @XulSubscriber(tag = CommonEntity.MESSAGE_ONE_SECOND)
     public void dealUpdate(Object obj) {
         if (isHidden()) {
@@ -361,6 +369,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     }
 
     private void stopAutoScroll() {
+        currentSelectPosition = -1;
         lastTouchTime = MyTime.currentTimeMillis();
         isAutoScroll = false;
         setStarSelectPosition(-1);

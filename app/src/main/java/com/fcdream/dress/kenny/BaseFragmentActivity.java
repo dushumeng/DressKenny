@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
+import com.baidu.mobstat.StatService;
 import com.fcdream.dress.kenny.ioc.AnnotateUtil;
 import com.fcdream.dress.kenny.message.XulMessageCenter;
 
@@ -53,5 +54,17 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
     protected void onDestroy() {
         XulMessageCenter.getDefault().unregister(this);
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }
