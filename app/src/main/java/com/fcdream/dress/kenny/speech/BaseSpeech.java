@@ -33,6 +33,8 @@ public abstract class BaseSpeech {
 
     public abstract void stop();
 
+    public abstract boolean isListening();
+
     public interface SpeechListener {
         void onListenStart();
 

@@ -116,6 +116,10 @@ public class RobotFragment extends BaseMainPageFragment {
     }
 
     private void dealEndTips() {
+        if (isFragmentIfaceValid()) {
+            XulMediaPlayer mediaPlayer = ifaceReference.get().getMediaPlayer();
+            mediaPlayer.stop();
+        }
         dealSpeakAnimation(false);
         robotTipText.setEllipsize(null);
     }

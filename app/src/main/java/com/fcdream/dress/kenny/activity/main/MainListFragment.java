@@ -388,7 +388,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     public void dealListenMicImageClick(View view) {
         dealStopSpeech();
-        dealStartSpeech();
+        changeListenState(false);
     }
 
     protected void dealStopSpeech() {

@@ -64,6 +64,11 @@ public class BaiduSpeech extends BaseSpeech implements RecognitionListener {
         }
     }
 
+    @Override
+    public boolean isListening() {
+        return state != STATUS_END;
+    }
+
     private Intent createParamIntent() {
         Intent intent = new Intent();
         //初始化语音文件
@@ -149,6 +154,8 @@ public class BaiduSpeech extends BaseSpeech implements RecognitionListener {
         if (speechListener != null) {
             speechListener.onListenError(sb.toString());
         }
+
+        stop();
     }
 
     @Override
