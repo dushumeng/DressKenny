@@ -1,72 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_robot">
 
-    <RelativeLayout
-        android:layout_width="@dimen/robot_width"
-        android:layout_height="@dimen/robot_height"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/robot_margin_bottom">
-
-        <RelativeLayout
-            android:layout_width="@dimen/robot_mic_bg_width"
-            android:layout_height="@dimen/robot_mic_bg_height"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/robot_mic_bg_margin_bottom"
-            android:background="@android:color/black">
-
-            <ImageView
-                android:id="@+id/robot_mic_line"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/robot_mic_line" />
-
-            <ImageView
-                android:id="@+id/robot_mic"
-                android:layout_width="@dimen/robot_mic_width"
-                android:layout_height="@dimen/robot_mic_height"
-                android:layout_centerInParent="true"
-                android:background="@drawable/robot_mic_bg" />
-
-            <ImageView
-                android:layout_width="@dimen/robot_mic_icon_width"
-                android:layout_height="@dimen/robot_mic_icon_height"
-                android:layout_centerInParent="true"
-                android:src="@drawable/robot_mic" />
-        </RelativeLayout>
-
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/robot_body" />
-
-        <ImageView
-            android:id="@+id/robot_mouth"
-            android:layout_width="@dimen/robot_mouth_width"
-            android:layout_height="@dimen/robot_mouth_height"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/robot_mouth_margin_bottom"
-            android:scaleType="fitCenter"
-            android:src="@drawable/anim_mouth" />
-    </RelativeLayout>
-
-
     <TextView
         android:id="@+id/robot_tip"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/robot_tip_height"
-        android:layout_marginLeft="@dimen/robot_tip_margin_left_right"
-        android:layout_marginRight="@dimen/robot_tip_margin_left_right"
-        android:layout_marginTop="@dimen/robot_tip_margin_top"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/drawable_main_line_bg"
         android:ellipsize="marquee"
         android:focusable="true"
@@ -78,5 +21,137 @@
         android:singleLine="true"
         android:text="@string/robot_tip"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/robot_tip_text_size" />
-</RelativeLayout>
+        android:textSize="@dimen/robot_tip_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="13:1"
+        app:layout_constraintHorizontal_bias="0.074"
+        app:layout_constraintLeft_toLeftOf="@+id/gl_tip_left"
+        app:layout_constraintRight_toRightOf="@+id/gl_tip_right"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.054"
+        />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/gl_robot_bg_bottom"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gl_robot_bg_top">
+
+        <ImageView
+            android:id="@+id/robot_mic_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/robot_mic_line"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/robot_mic"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/robot_mic"
+        app:layout_constraintBottom_toTopOf="@+id/gl_robot_mic_bottom"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gl_robot_mic_top"/>
+
+    <ImageView
+        android:id="@+id/robot_body"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/robot_body"
+        app:layout_constraintBottom_toTopOf="@+id/gl_robot_bottom"
+        app:layout_constraintDimensionRatio="478:738"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gl_robot_top"/>
+
+    <ImageView
+        android:id="@+id/robot_mouth"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/anim_mouth"
+        app:layout_constraintBottom_toTopOf="@+id/gl_robot_mouth_bottom"
+        app:layout_constraintDimensionRatio="239:31"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gl_robot_mouth_top"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_robot_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.215"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_robot_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.898"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_robot_mouth_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.487"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_robot_mouth_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.544"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_tip_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.078"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_tip_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.921"
+        />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_robot_mic_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.665"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_robot_mic_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.784"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_robot_bg_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6352"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_robot_bg_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8157"/>
+</android.support.constraint.ConstraintLayout>
