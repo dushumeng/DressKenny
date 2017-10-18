@@ -52,8 +52,6 @@ public class StarAdapter extends MyUltimateViewAdapter<StarResult.StarInfo> impl
             StarResult.StarInfo item = dataList.get(position);
             Picasso.with(App.getAppInstance())
                     .load(item.img)
-                    .resize((int) App.getAppInstance().getResources().getDimension(R.dimen.list_page_content_dress_item_width), (int) App.getAppInstance().getResources().getDimension(R.dimen.list_page_content_dress_item_height))
-                    .centerInside()
                     .placeholder(R.drawable.default_dress_big)
                     .into(mViewHolder.dressImage);
             mViewHolder.dressImage.setTag(position);

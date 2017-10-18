@@ -1,144 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_main_list">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_main_list">
 
     <ImageView
         android:id="@+id/back"
-        android:layout_width="@dimen/list_page_back_width"
-        android:layout_height="@dimen/list_page_back_height"
-        android:layout_marginLeft="@dimen/list_page_back_margin_left"
-        android:layout_marginTop="@dimen/list_page_back_margin_top"
-        android:src="@drawable/list_back"/>
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/list_back"
+        app:layout_constraintBottom_toTopOf="@+id/gl_tool_bottom"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="@+id/gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/gl_tool_top" />
+
 
     <Button
         android:id="@+id/goods_title"
-        android:layout_width="@dimen/list_page_content_goods_title_width"
-        android:layout_height="@dimen/list_page_content_goods_title_height"
-        android:layout_marginLeft="@dimen/list_page_content_goods_title_margin_left"
-        android:layout_marginTop="@dimen/list_page_content_goods_title_margin_top"
-        android:layout_toRightOf="@+id/back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/list_page_goods_btn_bg"
         android:text="本店全部商品"
         android:textColor="#00c5b5"
-        android:textSize="12sp"/>
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/gl_tool_bottom"
+        app:layout_constraintEnd_toEndOf="@+id/gl_shop_right"
+        app:layout_constraintStart_toStartOf="@+id/gl_shop_left"
+        app:layout_constraintTop_toBottomOf="@+id/gl_tool_top" />
 
-    <RelativeLayout
-        android:id="@+id/search_layout"
-        android:layout_width="@dimen/list_page_search_layout_width"
-        android:layout_height="@dimen/list_page_search_layout_height"
-        android:layout_marginLeft="@dimen/list_page_search_layout_margin_left"
-        android:layout_marginTop="@dimen/list_page_search_layout_margin_top"
-        android:layout_toRightOf="@+id/goods_title"
-        android:background="@drawable/list_page_search_layout_bg">
 
-        <ImageView
-            android:layout_width="@dimen/list_page_search_icon_width"
-            android:layout_height="@dimen/list_page_search_icon_height"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/list_page_search_icon_margin_right"
-            android:src="@drawable/icon_search"/>
+    <include layout="@layout/widget_search"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/gl_tool_bottom"
+        app:layout_constraintEnd_toEndOf="@+id/gl_search_right"
+        app:layout_constraintStart_toStartOf="@+id/gl_search_left"
+        app:layout_constraintTop_toBottomOf="@+id/gl_tool_top"/>
 
-        <EditText
-            android:id="@+id/search_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/list_page_search_editbox_margin"
-            android:layout_marginRight="@dimen/list_page_search_editbox_margin"
-            android:background="#00000000"
-            android:cursorVisible="false"
-            android:gravity="center_vertical"
-            android:hint="红色大衣"
-            android:imeOptions="actionSearch"
-            android:singleLine="true"
-            android:textColor="#000000"
-            android:textColorHint="#757575"
-            android:textSize="9sp"/>
-    </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="@dimen/list_page_speech_layout_width"
-        android:layout_height="@dimen/list_page_speech_layout_height"
-        android:layout_marginLeft="@dimen/list_page_speech_layout_x"
-        android:layout_marginTop="@dimen/list_page_speech_layout_y"
-        android:layout_toRightOf="@+id/search_layout"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/list_page_speech_layout_bg"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/gl_speech_bottom"
+        app:layout_constraintEnd_toEndOf="@+id/gl_speech_right"
+        app:layout_constraintStart_toStartOf="@+id/gl_speech_left"
+        app:layout_constraintTop_toBottomOf="@+id/gl_speech_top"
+        app:layout_constraintVertical_chainStyle="spread">
 
         <ImageView
             android:id="@+id/speech_robot"
-            android:layout_width="@dimen/list_page_speech_item_robot_width"
-            android:layout_height="@dimen/list_page_speech_item_robot_height"
-            android:src="@drawable/icon_robot"/>
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/icon_robot"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="124:110"
+            app:layout_constraintEnd_toStartOf="@+id/speech_mic"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/speech_mic"
-            android:layout_width="@dimen/list_page_speech_item_width"
-            android:layout_height="@dimen/list_page_speech_item_height"
-            android:layout_marginLeft="@dimen/list_page_speech_item_margin"
-            android:layout_marginRight="@dimen/list_page_speech_item_margin"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
             android:background="@drawable/circle_bg"
-            android:scaleType="centerInside"
-            android:src="@drawable/icon_mic"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_mic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/speech_speak"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/speech_robot"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/speech_speak"
-            android:layout_width="@dimen/list_page_speech_item_width"
-            android:layout_height="@dimen/list_page_speech_item_height"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
             android:background="@drawable/circle_bg"
-            android:scaleType="centerInside"
-            android:src="@drawable/anim_speak"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/anim_speak"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/speech_mic"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
-    <RelativeLayout
-        android:layout_width="@dimen/list_page_content_layout_width"
-        android:layout_height="@dimen/list_page_content_layout_height"
-        android:layout_marginLeft="@dimen/list_page_content_layout_x"
-        android:layout_marginTop="@dimen/list_page_content_layout_y">
 
-        <ImageView
-            android:id="@+id/content_line"
-            android:layout_width="@dimen/list_page_content_line_width"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/list_page_content_line_margin"
-            android:src="@drawable/list_page_content_line"
-            android:visibility="gone"/>
+    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+        android:id="@+id/dress_content_list_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:nestedScrollingEnabled="false"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/gl_content_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/gl_content_top"
+        app:recyclerviewScrollbars="horizontal" />
 
-        <!--<com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout-->
-        <!--android:id="@+id/dress_content_area"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_toRightOf="@+id/content_line">-->
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_tool_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.0454" />
 
-        <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
-            android:id="@+id/dress_content_list_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignWithParentIfMissing="true"
-            android:layout_toRightOf="@+id/content_line"
-            android:nestedScrollingEnabled="false"
-            android:scrollbars="none"
-            app:recyclerviewScrollbars="horizontal"/>
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_tool_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1528" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/shop_content_list_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/content_line"
-            android:visibility="gone"/>
-    </RelativeLayout>
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_content_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2046" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_content_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9213" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.0349" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2115" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_search_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.31" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_search_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.7036" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_speech_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.7292" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_speech_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9791" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_speech_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.037" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_speech_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1593" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_shop_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.113" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_shop_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.289" />
 
     <RelativeLayout
         android:id="@+id/listen_bg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#99000000"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/listen_mic"
@@ -146,6 +235,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:scaleType="center"
-            android:src="@drawable/anim_listen"/>
+            android:src="@drawable/anim_listen" />
     </RelativeLayout>
-</RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -44,8 +44,8 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     private static final int AUTO_SCROLL_CHECK_TIME_LEN = 30 * 1000;
     private static final int MSG_AUTO_SCROLL = 111;
 
-    @BindView(id = R.id.shop_content_list_view)
-    private RecyclerView shopRecyclerView;
+//    @BindView(id = R.id.shop_content_list_view)
+//    private RecyclerView shopRecyclerView;
 
     @BindView(id = R.id.back, clickEvent = "dealHandleBack", click = true)
     private ImageView backImage;
@@ -312,7 +312,7 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
 
     @XulSubscriber(tag = CommonEntity.MESSAGE_ONE_SECOND)
     public void dealUpdate(Object obj) {
-        if (isHidden()) {
+        if (isHidden() || !isResumed()) {
             return;
         }
         // TODO: 2017/9/6 检查当前是否需要自动滚动

@@ -3,11 +3,11 @@
 
     <!-- 圆角 -->
     <corners
-        android:bottomLeftRadius="13dp"
-        android:bottomRightRadius="13dp"
-        android:radius="13dp"
-        android:topLeftRadius="13dp"
-        android:topRightRadius="13dp" />
+        android:bottomLeftRadius="22dp"
+        android:bottomRightRadius="22dp"
+        android:radius="22dp"
+        android:topLeftRadius="22dp"
+        android:topRightRadius="22dp" />
 
     <!-- 描边 -->
     <solid

@@ -35,8 +35,6 @@ public class GoodsAdapter extends MyUltimateViewAdapter<GoodsResult.GoodsInfo> {
             GoodsResult.GoodsInfo item = dataList.get(i);
             Picasso.with(App.getAppInstance())
                     .load(item.img)
-                    .resize((int) App.getAppInstance().getResources().getDimension(R.dimen.goods_info_image_width), (int) App.getAppInstance().getResources().getDimension(R.dimen.goods_info_image_height))
-                    .centerCrop()
                     .placeholder(R.drawable.default_dress_big)
                     .into(viewHolder.dressImage);
             viewHolder.dressImage.setTag(i);

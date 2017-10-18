@@ -1,43 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_main_list">
 
-    <RelativeLayout
-        android:id="@+id/title_layout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/list_page_back_height"
-        android:layout_marginLeft="@dimen/list_page_back_margin_left"
-        android:layout_marginTop="@dimen/list_page_back_margin_top">
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/list_back"
+        app:layout_constraintBottom_toTopOf="@+id/gl_tool_bottom"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="@+id/gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/gl_tool_top" />
 
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="@dimen/list_page_back_width"
-            android:layout_height="@dimen/list_page_back_height"
-            android:src="@drawable/list_back" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/title_x"
-            android:layout_toRightOf="@+id/back"
-            android:gravity="center_vertical"
-            android:text="本店商品"
-            android:textColor="#ffffffff"
-            android:textSize="16sp" />
-    </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:text="本店商品"
+        android:textColor="#ffffffff"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/gl_tool_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.033"
+        app:layout_constraintLeft_toRightOf="@+id/back"
+        app:layout_constraintTop_toBottomOf="@+id/gl_tool_top" />
 
     <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
         android:id="@+id/content_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/goods_page_list_view_height"
-        android:layout_below="@+id/title_layout"
-        android:layout_marginLeft="@dimen/goods_page_list_view_x"
-        android:layout_marginTop="@dimen/goods_page_list_view_y"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:nestedScrollingEnabled="false"
         android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/gl_content_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/gl_content_top"
         app:recyclerviewScrollbars="horizontal" />
 
-</RelativeLayout>
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_tool_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.0454" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_tool_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1528" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_content_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2046" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_content_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9213" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.0349" />
+</android.support.constraint.ConstraintLayout>

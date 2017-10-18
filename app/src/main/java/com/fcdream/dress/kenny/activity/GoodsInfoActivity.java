@@ -55,13 +55,11 @@ public class GoodsInfoActivity extends BaseActivity {
         }
         Picasso.with(App.getAppInstance())
                 .load(goodsImg)
-                .resize((int) App.getAppInstance().getResources().getDimension(R.dimen.goods_info_image_width), (int) App.getAppInstance().getResources().getDimension(R.dimen.goods_info_image_height))
-                .centerCrop()
                 .placeholder(R.drawable.default_dress_big)
                 .into(goodsImageView);
 
         goodsInfoRecyclerBus = new GoodsInfoRecyclerBus();
-        goodsInfoRecyclerBus.init(this, (UltimateRecyclerView) findViewById(R.id.dress_content_list_view), null);
+        goodsInfoRecyclerBus.init(this, (UltimateRecyclerView) findViewById(R.id.content_list_view), null);
     }
 
     @Override
