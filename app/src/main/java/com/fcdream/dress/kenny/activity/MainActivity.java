@@ -54,8 +54,8 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
         baseSpeech.init(this);
         initFragment();
         //测试
-//        show(TYPE_MAIN_LIST, "红色大衣");
-        show(TYPE_ROBOT, null);
+        show(TYPE_MAIN_LIST, "红色大衣");
+//        show(TYPE_ROBOT, null);
     }
 
     @Override

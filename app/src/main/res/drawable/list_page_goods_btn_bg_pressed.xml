@@ -3,11 +3,11 @@
 
     <!-- 圆角 -->
     <corners
-        android:bottomLeftRadius="22dp"
-        android:bottomRightRadius="22dp"
-        android:radius="22dp"
-        android:topLeftRadius="22dp"
-        android:topRightRadius="22dp" />
+        android:bottomLeftRadius="@dimen/radius_22"
+        android:bottomRightRadius="@dimen/radius_22"
+        android:radius="@dimen/radius_22"
+        android:topLeftRadius="@dimen/radius_22"
+        android:topRightRadius="@dimen/radius_22" />
 
 
     <solid

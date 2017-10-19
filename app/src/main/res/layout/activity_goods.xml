@@ -21,7 +21,7 @@
         android:gravity="center_vertical"
         android:text="本店商品"
         android:textColor="#ffffffff"
-        android:textSize="16sp"
+        android:textSize="@dimen/title_font_size"
         app:layout_constraintBottom_toTopOf="@+id/gl_tool_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.033"
