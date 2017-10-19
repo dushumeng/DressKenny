@@ -2,10 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        fcdream {
+        release {
             keyAlias 'fcdream'
             keyPassword 'fcdream'
-            storeFile file('fcdream_key.jks')
+            storeFile file('app/fcdream_key.jks')
             storePassword 'fcdream'
         }
     }
@@ -29,7 +29,7 @@ android {
             minifyEnabled true
             shrinkResources true
             //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.fcdream
+            signingConfig signingConfigs.release
         }
     }
     sourceSets {
