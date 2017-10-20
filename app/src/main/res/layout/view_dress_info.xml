@@ -8,7 +8,7 @@
         android:id="@+id/dress_item_bg"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@color/color_dress_select_bg"
+        android:src="@color/theme_color"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="573:773"

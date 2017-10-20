@@ -4,10 +4,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval"
     android:useLevel="false">
-    <solid android:color="@color/color_circle_bg_normal"/>
+    <solid android:color="@color/theme_bg_normal"/>
     <stroke
         android:width="1dp"
-        android:color="@color/color_circle_bg_normal"/>
+        android:color="@color/theme_bg_normal"/>
 
     <size
         android:width="20dp"

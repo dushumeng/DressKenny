@@ -2,5 +2,5 @@
 
     <stroke
         android:width="7dp"
-        android:color="@color/color_dress_select_bg"/>
+        android:color="@color/theme_color"/>
 </shape>

@@ -3,11 +3,11 @@
 
     <!-- 圆角 -->
     <corners
-        android:bottomLeftRadius="@dimen/radius_22"
-        android:bottomRightRadius="@dimen/radius_22"
-        android:radius="@dimen/radius_22"
-        android:topLeftRadius="@dimen/radius_22"
-        android:topRightRadius="@dimen/radius_22" />
+        android:bottomLeftRadius="22dp"
+        android:bottomRightRadius="22dp"
+        android:radius="22dp"
+        android:topLeftRadius="22dp"
+        android:topRightRadius="22dp" />
 
 
     <solid
@@ -17,6 +17,6 @@
     <!-- 描边 -->
     <stroke
         android:width="1dp"
-        android:color="#00c5b5"
+        android:color="@color/theme_bg_normal"
         />
 </shape>

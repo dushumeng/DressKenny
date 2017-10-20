@@ -3,19 +3,19 @@
 
     <!-- 圆角 -->
     <corners
-        android:bottomLeftRadius="@dimen/radius_22"
-        android:bottomRightRadius="@dimen/radius_22"
-        android:radius="@dimen/radius_22"
-        android:topLeftRadius="@dimen/radius_22"
-        android:topRightRadius="@dimen/radius_22" />
+        android:bottomLeftRadius="22dp"
+        android:bottomRightRadius="22dp"
+        android:radius="22dp"
+        android:topLeftRadius="22dp"
+        android:topRightRadius="22dp" />
 
     <!-- 描边 -->
     <solid
         android:width="1dp"
-        android:color="#ff1b756f" />
+        android:color="@color/theme_color" />
 
     <stroke
         android:width="1dp"
-        android:color="#ff1b756f"
+        android:color="@color/theme_color"
         />
 </shape>

@@ -20,7 +20,7 @@
         android:layout_height="0dp"
         android:gravity="center_vertical"
         android:text="本店商品"
-        android:textColor="#ffffffff"
+        android:textColor="@color/theme_font_color"
         android:textSize="@dimen/title_font_size"
         app:layout_constraintBottom_toTopOf="@+id/gl_tool_bottom"
         app:layout_constraintEnd_toEndOf="parent"

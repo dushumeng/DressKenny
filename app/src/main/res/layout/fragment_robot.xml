@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_robot">
 
+
+    <!--android:background="@drawable/drawable_main_line_bg"-->
     <TextView
         android:id="@+id/robot_tip"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/drawable_main_line_bg"
         android:ellipsize="marquee"
         android:focusable="true"
         android:focusableInTouchMode="true"

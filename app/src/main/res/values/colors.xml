@@ -6,4 +6,10 @@
     <color name="color_dress_select_bg">#ff1b756f</color>
     <color name="color_circle_bg_normal">#00c5b5</color>
     <color name="color_circle_bg_pressed">#b200c5b5</color>
+
+
+    <color name="theme_bg_normal">#996c2c</color>
+    <color name="theme_bg_pressed">#b2996c2c</color>
+    <color name="theme_color">#99996c2c</color>
+    <color name="theme_font_color">#99996c2c</color>
 </resources>

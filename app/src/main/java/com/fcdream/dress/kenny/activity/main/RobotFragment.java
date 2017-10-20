@@ -49,7 +49,7 @@ public class RobotFragment extends BaseMainPageFragment {
         robotMouthAnim = (AnimationDrawable) activity.getResources().getDrawable(R.drawable.anim_mouth);
         robotTipText.setEllipsize(null);
 
-        int y = (int) activity.getResources().getDimension(R.dimen.robot_mic_bg_height);
+        int y = 100;
         y = y * 3 / 4;
         robotMicLineAnimation = new TranslateAnimation(0, 0, -y, y);
         robotMicLineAnimation.setDuration(3000);
