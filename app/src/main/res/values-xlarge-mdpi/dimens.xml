@@ -2,6 +2,7 @@
 
     <!-- Default screen margins, per the Android Design guidelines. -->
 
+    <dimen name="robot_scan_area_size">240dp</dimen>
     <dimen name="robot_tip_font_size">60sp</dimen>
     <dimen name="robot_tip_padding">36dp</dimen>
     <dimen name="shop_font_size">36sp</dimen>

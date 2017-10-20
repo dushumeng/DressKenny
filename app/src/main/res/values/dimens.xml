@@ -6,7 +6,7 @@
     <dimen name="robot_mic_bg_height">80dp</dimen>
     <dimen name="goods_info_image_space">5dp</dimen>
 
-
+    <dimen name="robot_scan_area_size">80dp</dimen>
     <dimen name="robot_tip_font_size">20sp</dimen>
     <dimen name="robot_tip_padding">12dp</dimen>
     <dimen name="title_font_size">16sp</dimen>
