@@ -5,7 +5,7 @@ android {
         release {
             keyAlias 'fcdream'
             keyPassword 'fcdream'
-            storeFile file('app/fcdream_key.jks')
+            storeFile file('fcdream_key.jks')
             storePassword 'fcdream'
         }
     }
@@ -26,7 +26,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             shrinkResources false
             //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
@@ -40,6 +40,24 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    productFlavors {
+        baidu {
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            if (output.outputFile != null && output.outputFile.name.endsWith('.apk')
+                    && 'release' == variant.buildType.name) {
+                def flavorName = variant.flavorName.startsWith("_") ? variant.flavorName.substring(1) : variant.flavorName
+                def apkFile = new File(
+                        output.outputFile.getParent(),
+                        "DressKenny_${flavorName}_v${variant.versionName}_${buildTime()}.apk")
+                output.outputFile = apkFile
+            }
+        }
     }
 }
 
@@ -75,4 +93,10 @@ dependencies {
     //    compile 'com.baidu.mobstat:mtj-sdk:latest.integration'
     compile files('libs/Baidu_Mtj_3.7.5.5.jar')
     compile(name: 'autoupdatesdk-release', ext: 'aar')
+}
+
+def buildTime() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMddHHmmss')
+    return formattedDate
 }
