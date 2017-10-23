@@ -24,6 +24,7 @@ import com.fcdream.dress.kenny.recycler.StarRecyclerBus;
 import com.fcdream.dress.kenny.speech.BaseSpeechSynthesizer;
 import com.fcdream.dress.kenny.speech.SpeechFactory;
 import com.fcdream.dress.kenny.speech.SpeechSynthesizerError;
+import com.fcdream.dress.kenny.utils.AndroidUtils;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
 import android.support.v7.widget.RecyclerView;
@@ -64,6 +65,9 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
     @BindView(id = R.id.search_edit_text)
     private EditText searchEditText;
 
+    @BindView(id = R.id.search_edit_image, clickEvent = "dealHandleSearch", click = true)
+    private ImageView searchImage;
+
     @BindView(id = R.id.listen_bg, clickEvent = "dealListenBgLayoutClick", click = true)
     private RelativeLayout listenBgLayout;
 
@@ -100,7 +104,8 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
         dealChangeSpeakStatus(STATE_SPEAK_NORMAL);
         searchEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                dealSearch(searchEditText.getText().toString());
+                dealSearch();
+                return true;
             }
             return false;
         });
@@ -420,5 +425,17 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
             }
             starRecyclerBus.onStart();
         }
+    }
+
+    public void dealHandleSearch(View view) {
+        dealSearch();
+    }
+
+    private void dealSearch() {
+        String searchText = searchEditText.getText().toString();
+        if (TextUtils.isEmpty(searchText)) {
+            return;
+        }
+        AndroidUtils.hideSoftInput(getContext(), searchEditText);
     }
 }

@@ -11,6 +11,7 @@
     <dimen name="robot_tip_padding">12dp</dimen>
     <dimen name="title_font_size">16sp</dimen>
     <dimen name="shop_font_size">12sp</dimen>
+    <dimen name="logo_tip_font_size">12sp</dimen>
     <dimen name="search_font_size">9sp</dimen>
     <dimen name="radius_22">22dp</dimen>
     <dimen name="search_padding">8dp</dimen>

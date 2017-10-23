@@ -15,4 +15,11 @@
         android:name="com.fcdream.dress.kenny.activity.main.MainListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+
+    <fragment
+        android:id="@+id/layout_search"
+        android:name="com.fcdream.dress.kenny.activity.main.SearchFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.fcdream.dress.kenny.activity;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -12,6 +13,7 @@ import com.fcdream.dress.kenny.activity.main.BaseMainFragmentIface;
 import com.fcdream.dress.kenny.activity.main.BaseMainPageFragment;
 import com.fcdream.dress.kenny.activity.main.MainListFragment;
 import com.fcdream.dress.kenny.activity.main.RobotFragment;
+import com.fcdream.dress.kenny.activity.main.SearchFragment;
 import com.fcdream.dress.kenny.ioc.BindLayout;
 import com.fcdream.dress.kenny.log.MyLog;
 import com.fcdream.dress.kenny.player.XulMediaPlayer;
@@ -55,7 +57,7 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
         initFragment();
         //测试
 //        show(TYPE_MAIN_LIST, "红色大衣");
-        show(TYPE_ROBOT, null);
+        show(TYPE_SEARCH, null);
     }
 
     @Override
@@ -68,9 +70,12 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
         robotFragment.setFragmentIface(this);
         MainListFragment mainListFragment = (MainListFragment) getSupportFragmentManager().findFragmentById(R.id.layout_main_list);
         mainListFragment.setFragmentIface(this);
+        SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.layout_search);
+        searchFragment.setFragmentIface(this);
 
         fragmentMap.put(robotFragment.getFragmentType(), robotFragment);
         fragmentMap.put(mainListFragment.getFragmentType(), mainListFragment);
+        fragmentMap.put(searchFragment.getFragmentType(), searchFragment);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         for (String key : fragmentMap.keySet()) {
@@ -116,7 +121,7 @@ public class MainActivity extends BaseFragmentActivity implements BaseMainFragme
     @Override
     public void dealFragmentBack(BaseMainPageFragment fragment) {
         if (fragment != null && TextUtils.equals(fragment.getFragmentType(), TYPE_MAIN_LIST)) {
-            show(TYPE_ROBOT, null);
+            show(TYPE_SEARCH, null);
         }
     }
 

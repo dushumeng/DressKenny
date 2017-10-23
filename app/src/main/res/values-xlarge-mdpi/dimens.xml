@@ -6,6 +6,7 @@
     <dimen name="robot_tip_font_size">60sp</dimen>
     <dimen name="robot_tip_padding">36dp</dimen>
     <dimen name="shop_font_size">36sp</dimen>
+    <dimen name="logo_tip_font_size">36sp</dimen>
     <dimen name="title_font_size">48sp</dimen>
     <dimen name="search_font_size">30sp</dimen>
     <dimen name="radius_22">66dp</dimen>
