@@ -2,6 +2,7 @@ package com.fcdream.dress.kenny.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,8 +51,9 @@ public class StarAdapter extends MyUltimateViewAdapter<StarResult.StarInfo> impl
         if (holder instanceof ViewHolder) {
             ViewHolder mViewHolder = (ViewHolder) holder;
             StarResult.StarInfo item = dataList.get(position);
+            Log.e("dsminfo", "width:" + mViewHolder.dressImage.getWidth() + ";height:" + mViewHolder.dressImage.getHeight());
             Picasso.with(App.getAppInstance())
-                    .load(item.img)
+                    .load(item.bigImg)
                     .placeholder(R.drawable.default_dress_big)
                     .into(mViewHolder.dressImage);
             mViewHolder.dressImage.setTag(position);

@@ -437,5 +437,6 @@ public class MainListFragment extends BaseMainPageFragment implements BaseSpeech
             return;
         }
         AndroidUtils.hideSoftInput(getContext(), searchEditText);
+        dealSearch(searchText);
     }
 }
